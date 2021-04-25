@@ -2,40 +2,51 @@ package threads;
 
 import sharedRegions.DepartureAirport.DepartureAirport;
 import sharedRegions.Plane.Plane;
+import sharedRegions.Repository.IRepository;
 import sharedRegions.util.GeneralTool;
 
-public class Pilot extends Thread{
+import state.SPilot;
+
+public class Pilot extends Thread {
 
     //References to shared regions
     DepartureAirport departureAirport;
     Plane plane;
 
-    public Pilot(DepartureAirport departureAirport, Plane plane) {
+    // Information Repository
+    IRepository repository;
+
+    public Pilot(DepartureAirport departureAirport, Plane plane, IRepository repository) {
         this.departureAirport = departureAirport;
         this.plane = plane;
+
+        this.repository = repository;
     }
 
     @Override
     public void run() {
+        while(!departureAirport.isInformPilotToCeaseActivity()) {
 
-        while(true){
-            if(departureAirport.isInformPilotToCeaseActivity())
-                break;
+            repository.update(SPilot.AT_TRANSFER_GATE);
+
             departureAirport.informReadyBoarding();
             departureAirport.waitingForBoarding();
+            
             //Fly to destination
+            repository.update(SPilot.FLYING_FORWARD);
             fly();
+            
             plane.announceArrival();
             plane.waitingForDeboarding();
+            
             //Fly to origin point
+            repository.update(SPilot.FLYING_BACK);
             fly();
         }
-
-        System.out.println("Pilot ceased activity");
     }
 
     private void fly(){
-        int randomSleepValue = GeneralTool.getRandomNumber(5,20);
+        int randomSleepValue = GeneralTool.getRandomNumber(1,2);
 
         try {
             Thread.sleep(randomSleepValue*1000);

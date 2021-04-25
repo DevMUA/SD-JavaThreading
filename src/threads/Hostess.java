@@ -2,7 +2,7 @@ package threads;
 
 import sharedRegions.DepartureAirport.DepartureAirport;
 
-public class Hostess extends Thread{
+public class Hostess extends Thread {
 
     private int totalNumberOfPassengers;
     private int attendedPassengers;
@@ -20,15 +20,17 @@ public class Hostess extends Thread{
     public void run() {
 
         while(!allPassengersAttended()){
+            boolean flight_full = false;
+            
             departureAirport.waitingForNextFlight();
-            departureAirport.waitingForPassenger();
-            departureAirport.askForDocuments();
-            departureAirport.waitingToCheckPassenger();
-            attendedPassengers++;
-            departureAirport.informReadyToFly();
+            while(!flight_full) {
+                departureAirport.waitingForPassenger();
+                departureAirport.askForDocuments();
+                departureAirport.waitingToCheckPassenger();
+                attendedPassengers++;
+                flight_full = departureAirport.informReadyToFly();
+            }
         }
-
-        System.out.println("Hostess ceased activity");
     }
 
     public boolean allPassengersAttended(){
