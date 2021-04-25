@@ -99,9 +99,11 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
             }
         }
         
-        repository.update(passengerQueue.peek(), SHostess.CHECK_PASSENGER);
-        
         int nextPassenger = passengerQueue.remove();
+        
+        repository.updateInq(passengerQueue.size());
+        repository.update(nextPassenger, SHostess.CHECK_PASSENGER);
+        
         notifyAll();
     }
 
@@ -188,8 +190,12 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
         int passengerID = p.getPassengerID();
 
         passengerQueue.add(passengerID);
-        notifyAll();
+        
+        repository.updateInq(passengerQueue.size());
         repository.update(passengerID, SPassenger.IN_QUEUE);
+
+        notifyAll();
+        
     }
 
     //Passenger waits in queue until he is removed from said queue

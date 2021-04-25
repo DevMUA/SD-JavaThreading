@@ -11,7 +11,7 @@ import threads.Passenger;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Plane implements IPassengerP,IPilotP {
+public class Plane implements IPassengerP, IPilotP {
 
     //Passenger list
     private Queue<Integer> passengerQueue;
@@ -51,9 +51,10 @@ public class Plane implements IPassengerP,IPilotP {
         Passenger p = (Passenger) Thread.currentThread();
         int passengerID = p.getPassengerID();
 
-        repository.update(passengerID, SPassenger.IN_FLIGHT);
-
         passengerQueue.add(p.getPassengerID());
+        
+        repository.updateInf(passengerQueue.size());
+        repository.update(passengerID, SPassenger.IN_FLIGHT);
     }
 
     //Passenger waits for plane to land at destination
@@ -73,9 +74,10 @@ public class Plane implements IPassengerP,IPilotP {
     public synchronized void leavePlane() {
         Passenger p = (Passenger) Thread.currentThread();
         int passengerID = p.getPassengerID();
-        
+
         passengerQueue.remove(passengerID);
 
+        repository.updateInf(passengerQueue.size());
         repository.update(passengerID, SPassenger.AT_DESTINATION);
 
         if(passengerQueue.size() == 0){
@@ -98,6 +100,7 @@ public class Plane implements IPassengerP,IPilotP {
     //Pilot announces arrival to passengers
     @Override
     public synchronized void announceArrival() {
+        repository.update(SPilot.DEBOARDING);
         announceArrival = true;
         notifyAll();
     }
@@ -105,8 +108,6 @@ public class Plane implements IPassengerP,IPilotP {
     //Pilot waits for deboarding
     @Override
     public synchronized void waitingForDeboarding() {
-        repository.update(SPilot.DEBOARDING);
-        
         while(!leaveThePlane){
             try {
                 wait();

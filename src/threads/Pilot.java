@@ -46,7 +46,7 @@ public class Pilot extends Thread {
     }
 
     private void fly(){
-        int randomSleepValue = GeneralTool.getRandomNumber(5,20);
+        int randomSleepValue = GeneralTool.getRandomNumber(1,2);
 
         try {
             Thread.sleep(randomSleepValue*1000);

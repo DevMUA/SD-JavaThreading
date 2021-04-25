@@ -44,7 +44,7 @@ public class Passenger extends Thread {
 
     //Makes thread sleep for a random time between 5 and 20
     private void goingToAirport(){
-        int randomSleepValue = GeneralTool.getRandomNumber(5,20);
+        int randomSleepValue = GeneralTool.getRandomNumber(5,25);
 
         try {
             Thread.sleep(randomSleepValue*1000);

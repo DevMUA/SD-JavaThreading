@@ -13,8 +13,8 @@ import java.util.LinkedList;
 public class Repository implements IRepository {
 
 	SPassenger sPassengers[]; 
-    SPilot sPilot;
-    SHostess sHostess;
+    SPilot sPilot = SPilot.AT_TRANSFER_GATE;
+    SHostess sHostess = SHostess.WAITING_FOR_FLIGHT;
 
     // Sums up of passengers transported in all the flights
     LinkedList<Integer> flights = new LinkedList<Integer>();
@@ -29,94 +29,67 @@ public class Repository implements IRepository {
 	public Repository(int NUMBER_PASSENGERS) {
 	   	sPassengers = new SPassenger[NUMBER_PASSENGERS];
         Arrays.fill(sPassengers, SPassenger.GOING_TO_AIRPORT);
-        sPilot = SPilot.AT_TRANSFER_GATE;
-        sHostess = SHostess.WAITING_FOR_FLIGHT;
 
         String state = String.format("%"+ 42 +"sAirlift - Description of the internal state\n\n PT   HT ", " ");
-
         for(int i = 0; i < NUMBER_PASSENGERS; i++)
             state += String.format("  P%02d", i);
-        
         state += " InQ InF PTAL\n";
-        
+
         write(state);
 	}
 	
     public synchronized void update(SPilot state) {
         sPilot = state;
-        String info;
 
-        switch(state) {
-            case READY_FOR_BOARDING:      
-                info = String.format("\nFlight %d: boarding started.\n", flights.size());
-                write(info);
-                break;
+        if(state==SPilot.READY_FOR_BOARDING) 
+                flights.addLast(0);
 
-            case DEBOARDING:
-                info = String.format("\nFlight %d: arrived.\n", flights.size());
-                write(info);
-                break;
-
-            case FLYING_BACK:
-                info = String.format("\nFlight %d: returning.\n", flights.size());
-                write(info);
-                break;
-        }
-        //write(state + "\n");
-        write(state());
+        String div = state.logDiv(flights.size());
+        write(div + state());
     }
 
     public synchronized void update(int passenger_no, SHostess state) {
-        String info = String.format("\nFlight %d: passenger %d checked\n", flights.size(), passenger_no);
-        write(info);
-        inq--;
-
         sHostess = state;
-        //write(state + "\n");
-        write(state());
+
+        String div = state.logDiv(flights.size(), passenger_no);    
+        write(div + state());
     }
 
     public synchronized void update(SHostess state) {
         if(sHostess != state) {
-            switch (state) {
-                case READY_TO_FLY:
-                flights.addLast(inf);
-                String info = String.format("\nFlight %d: departed with %d passengers.\n", flights.size(), inf);
-                write(info);
-            }
-
             sHostess = state;
-            //write(state + "\n");
-            write(state());
+            
+            if(state==SHostess.READY_TO_FLY)  {
+                flights.removeLast();
+                flights.addLast(inf);
+            }
+            
+            String div = state.logDiv(flights.size(), inf);
+            write(div + state());
         }
     }
 
     public synchronized void update(int passenger_no, SPassenger state) {
         sPassengers[passenger_no] = state;
         switch(state) {
-            
-            case IN_QUEUE:
-                inq++;
-                break;
-            
-            case IN_FLIGHT:
-                inf++;
-                break;
-            
             case AT_DESTINATION:
-                inf--; ptal++;
+                ptal++;
         }
-        
-        //write(state + "\n");
         write(state());
     }
 
-    public synchronized void sumUp() {
-        String info = "\nAirlift sum up:\n";
+    public synchronized void updateInq(int inq) { this.inq = inq; }
+    public synchronized void updateInf(int inf) { this.inf = inf; }
+    public synchronized void updatePtal(int ptal) { this.ptal = ptal; }
+
+    public synchronized void writeSumUp() {
+        String info = "\nAirlift sum up:";
+        
         for(int i = 0; i < flights.size(); i++) {
-            info += String.format("Flight %d transported %d passengers\n", i+1, flights.get(i));
+            info += String.format("\nFlight %d transported %d passengers", i+1, flights.get(i));
         }
-        write(info + ".");
+        
+        write(info + ".\n");
     }
 
     // Obtaining last updated state of every thread;

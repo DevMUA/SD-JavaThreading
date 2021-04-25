@@ -1,6 +1,6 @@
 package sharedRegions.Plane;
 
-public interface IPassenger {
+public interface IPassengerP {
     public void boardPlane();
     public void waitForPlaneToLand();
     public void leavePlane();

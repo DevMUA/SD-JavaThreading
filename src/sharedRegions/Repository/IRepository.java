@@ -10,5 +10,9 @@ public interface IRepository {
 	public void update(int passenger_no, SHostess state);
 	public void update(int passenger_no, SPassenger state);
 
-	public void sumUp();
+	public void updateInq(int inq);
+	public void updateInf(int inf);
+	public void updatePtal(int ptal);
+
+	public void writeSumUp();
 }

@@ -56,7 +56,7 @@ public class Airlift {
             e.printStackTrace();
         }
         
-        repository.sumUp();
+        repository.writeSumUp();
     }
 
 }
