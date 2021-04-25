@@ -5,7 +5,7 @@ import sharedRegions.DepartureAirport.DepartureAirport;
 import sharedRegions.Plane.Plane;
 import sharedRegions.util.GeneralTool;
 
-public class Passenger extends Thread{
+public class Passenger extends Thread {
 
     //Private attributes
     private int passengerID;
@@ -40,8 +40,6 @@ public class Passenger extends Thread{
 
         //In arrival airport
         arrivalAirport.leaveAirport();
-
-        System.out.println("Passenger ceased activity");
     }
 
     //Makes thread sleep for a random time between 5 and 20

@@ -1,6 +1,11 @@
 package sharedRegions.Plane;
 
+import sharedRegions.Repository.IRepository;
 import sharedRegions.util.GeneralTool;
+
+import state.SPilot;
+import state.SPassenger;
+
 import threads.Passenger;
 
 import java.util.LinkedList;
@@ -16,7 +21,10 @@ public class Plane implements IPassengerP,IPilotP {
     //Signaling variables pilot
     private boolean announceArrival;
 
-    public Plane() {
+    // Information Repository
+    IRepository repository;
+
+    public Plane(IRepository repository) {
         passengerQueue = new LinkedList<Integer>();
 
 
@@ -24,6 +32,8 @@ public class Plane implements IPassengerP,IPilotP {
         this.leaveThePlane = false;
         //pilot variables
         this.announceArrival = false;
+
+        this.repository = repository;
     }
 
     /*
@@ -39,15 +49,16 @@ public class Plane implements IPassengerP,IPilotP {
     @Override
     public synchronized void boardPlane() {
         Passenger p = (Passenger) Thread.currentThread();
+        int passengerID = p.getPassengerID();
+
+        repository.update(passengerID, SPassenger.IN_FLIGHT);
 
         passengerQueue.add(p.getPassengerID());
-        System.out.println("Passenger " + p.getPassengerID() + " boarded plane");
     }
 
     //Passenger waits for plane to land at destination
     @Override
     public synchronized void waitForPlaneToLand() {
-        System.out.println("Passenger is waiting for plane to land");
         while(!announceArrival){
             try {
                 wait();
@@ -61,13 +72,15 @@ public class Plane implements IPassengerP,IPilotP {
     @Override
     public synchronized void leavePlane() {
         Passenger p = (Passenger) Thread.currentThread();
+        int passengerID = p.getPassengerID();
+        
+        passengerQueue.remove(passengerID);
 
-        passengerQueue.remove(p.getPassengerID());
-        System.out.println("Passenger " + p.getPassengerID() + " left plane");
+        repository.update(passengerID, SPassenger.AT_DESTINATION);
+
         if(passengerQueue.size() == 0){
             leaveThePlane = true;
             notifyAll();
-            System.out.println("Passenger " + p.getPassengerID() + " notified pilot he was the last one");
         }
     }
 
@@ -85,7 +98,6 @@ public class Plane implements IPassengerP,IPilotP {
     //Pilot announces arrival to passengers
     @Override
     public synchronized void announceArrival() {
-        System.out.println("announced arrival");
         announceArrival = true;
         notifyAll();
     }
@@ -93,7 +105,8 @@ public class Plane implements IPassengerP,IPilotP {
     //Pilot waits for deboarding
     @Override
     public synchronized void waitingForDeboarding() {
-
+        repository.update(SPilot.DEBOARDING);
+        
         while(!leaveThePlane){
             try {
                 wait();
@@ -101,7 +114,6 @@ public class Plane implements IPassengerP,IPilotP {
                 e.printStackTrace();
             }
         }
-
         announceArrival = false;
         leaveThePlane = false;
         notifyAll();

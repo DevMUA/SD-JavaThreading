@@ -5,5 +5,5 @@ public interface IHostessDP {
     public void waitingForPassenger();
     public void askForDocuments();
     public void waitingToCheckPassenger();
-    public void informReadyToFly();
+    public boolean informReadyToFly();
 }
