@@ -1,3 +1,7 @@
 *.class
 *.txt
 
+*.iml
+*.ipr
+*.iws
+.idea/
