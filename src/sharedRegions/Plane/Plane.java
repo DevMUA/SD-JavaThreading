@@ -1,7 +1,6 @@
 package sharedRegions.Plane;
 
 import sharedRegions.Repository.IRepository;
-import sharedRegions.util.GeneralTool;
 
 import state.SPilot;
 import state.SPassenger;
@@ -47,7 +46,7 @@ public class Plane implements IPassengerP, IPilotP {
 
     //Passenger enters the plane list
     @Override
-    public synchronized void boardPlane() {
+    public synchronized int boardPlane() {
         Passenger p = (Passenger) Thread.currentThread();
         int passengerID = p.getPassengerID();
 
@@ -55,11 +54,12 @@ public class Plane implements IPassengerP, IPilotP {
         
         repository.updateInf(passengerQueue.size());
         repository.update(passengerID, SPassenger.IN_FLIGHT);
+        return 0;
     }
 
     //Passenger waits for plane to land at destination
     @Override
-    public synchronized void waitForPlaneToLand() {
+    public synchronized int waitForPlaneToLand() {
         while(!announceArrival){
             try {
                 wait();
@@ -67,11 +67,12 @@ public class Plane implements IPassengerP, IPilotP {
                 e.printStackTrace();
             }
         }
+        return 0;
     }
 
     //Passenger leaves the plane and if he is the last notifies the pilot
     @Override
-    public synchronized void leavePlane() {
+    public synchronized int leavePlane() {
         Passenger p = (Passenger) Thread.currentThread();
         int passengerID = p.getPassengerID();
 
@@ -84,6 +85,7 @@ public class Plane implements IPassengerP, IPilotP {
             leaveThePlane = true;
             notifyAll();
         }
+        return 0;
     }
 
     /*
@@ -99,15 +101,16 @@ public class Plane implements IPassengerP, IPilotP {
 
     //Pilot announces arrival to passengers
     @Override
-    public synchronized void announceArrival() {
+    public synchronized int announceArrival() {
         repository.update(SPilot.DEBOARDING);
         announceArrival = true;
         notifyAll();
+        return 0;
     }
 
     //Pilot waits for deboarding
     @Override
-    public synchronized void waitingForDeboarding() {
+    public synchronized int waitingForDeboarding() {
         while(!leaveThePlane){
             try {
                 wait();
@@ -118,6 +121,7 @@ public class Plane implements IPassengerP, IPilotP {
         announceArrival = false;
         leaveThePlane = false;
         notifyAll();
+        return 0;
     }
 
 }

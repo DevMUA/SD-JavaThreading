@@ -1,9 +1,9 @@
 package sharedRegions.DepartureAirport;
 
 public interface IHostessDP {
-    public void waitingForNextFlight();
-    public void waitingForPassenger();
-    public void askForDocuments();
-    public void waitingToCheckPassenger();
+    public int waitingForNextFlight();
+    public int waitingForPassenger();
+    public int askForDocuments();
+    public int waitingToCheckPassenger();
     public boolean informReadyToFly();
 }

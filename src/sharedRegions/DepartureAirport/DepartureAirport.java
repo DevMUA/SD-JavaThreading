@@ -1,7 +1,6 @@
 package sharedRegions.DepartureAirport;
 
 import sharedRegions.Repository.IRepository;
-import sharedRegions.util.GeneralTool;
 
 import state.SPilot;
 import state.SHostess;
@@ -13,7 +12,7 @@ import threads.Passenger;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
+public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
 
     //Passenger list
     private Queue<Integer> passengerQueue;
@@ -67,11 +66,11 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
         | '_ \ / _ \/ __| __/ _ \/ __/ __|
         | | | | (_) \__ \ ||  __/\__ \__ \
         |_| |_|\___/|___/\__\___||___/___/
-         */
+    */
 
     //Hostess waits for the plane to be ready for boarding
     @Override
-    public synchronized void waitingForNextFlight() {
+    public synchronized int waitingForNextFlight() {
         repository.update(SHostess.WAITING_FOR_FLIGHT);
         
         while(!informPlaneReadyForBoarding){
@@ -81,12 +80,12 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
                 e.printStackTrace();
             }
         }
-
+        return 0;
     }
 
     //hostess removes one person from the queue and notifies all passenger (so they check if they were the one removed)
     @Override
-    public synchronized void waitingForPassenger() {
+    public synchronized int waitingForPassenger() {
         repository.update(SHostess.WAITING_FOR_PASSENGER);
         
         waitForNextPassenger = false;
@@ -105,18 +104,20 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
         repository.update(nextPassenger, SHostess.CHECK_PASSENGER);
         
         notifyAll();
+        return 0;
     }
 
     //hostess asks for the documents and waits for the passenger to show the documents
     @Override
-    public synchronized void askForDocuments() {
+    public synchronized int askForDocuments() {
         askDocuments = true;
         notifyAll();
+        return 0;
     }
 
     //hostess waits for the passenger to show the documents and then starts waiting for the next passenger and notifies the passenger that he is checked in
     @Override
-    public synchronized void waitingToCheckPassenger() {
+    public synchronized int waitingToCheckPassenger() {
         while(!showingDocuments){
             try {
                 wait();
@@ -138,6 +139,7 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
             }
         }
         checkedIn = false;
+        return 0;
     }
 
     //hostess checks if plane is ready to fly and gives the signal if it is
@@ -185,7 +187,7 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
 
     // Passenger places itself in queue and notifies hostess
     @Override
-    public synchronized void travelToAirport() {
+    public synchronized int travelToAirport() {
         Passenger p = (Passenger) Thread.currentThread();
         int passengerID = p.getPassengerID();
 
@@ -195,12 +197,12 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
         repository.update(passengerID, SPassenger.IN_QUEUE);
 
         notifyAll();
-        
+        return 0;
     }
 
     //Passenger waits in queue until he is removed from said queue
     @Override
-    public synchronized void waitInQueue() {
+    public synchronized int waitInQueue() {
         Passenger p = (Passenger) Thread.currentThread();
         int passengerID = p.getPassengerID();
 
@@ -211,11 +213,12 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
                 e.printStackTrace();
             }
         }
+        return 0;
     }
 
     //Passenger showsDocuments and notifies hostess
     @Override
-    public synchronized void showDocuments() {
+    public synchronized int showDocuments() {
         while(!askDocuments){
             try {
                 wait();
@@ -225,11 +228,12 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
         }
         showingDocuments = true;
         notifyAll();
+        return 0;
     }
 
     //Passenger waits for hostess to be in waitForNextPassenger state then enters the plane and increments passengers in plane
     @Override
-    public synchronized void waitingToBeCheckedIn() {
+    public synchronized int waitingToBeCheckedIn() {
         while(!waitForNextPassenger){
             try {
                 wait();
@@ -240,6 +244,7 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
         checkedIn = true;
         passengersInPlane++;
         notifyAll();
+        return 0;
     }
 
     /*
@@ -255,16 +260,17 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
 
     //Pilot informs hostess that plane is ready for boarding
     @Override
-    public synchronized void informReadyBoarding() {
+    public synchronized int informReadyBoarding() {
         repository.update(SPilot.READY_FOR_BOARDING);
         
         informPlaneReadyForBoarding = true;
         notifyAll();
+        return 0;
     }
 
     //Pilot waits until hostess gives signal that plane is ready for boarding and if it is signals that there is no more boarding
     @Override
-    public synchronized void waitingForBoarding() {
+    public synchronized int waitingForBoarding() {
         repository.update(SPilot.WAITING_FOR_BOARDING);
         
         while(!informPlaneReadyToTakeOff){
@@ -276,6 +282,7 @@ public class DepartureAirport implements IHostessDP,IPassengerDP,IPilotDP{
         }
         informPlaneReadyForBoarding = false;
         notifyAll();
+        return 0;
     }
 
     public synchronized boolean isInformPilotToCeaseActivity() {
