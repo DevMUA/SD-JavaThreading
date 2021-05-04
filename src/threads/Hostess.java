@@ -2,6 +2,7 @@ package threads;
 
 import sharedRegions.DepartureAirport.DepartureAirport;
 import sharedRegions.DepartureAirport.IHostessDP;
+import sharedRegions.Repository.IRepository;
 
 public class Hostess extends Thread {
 
@@ -11,7 +12,10 @@ public class Hostess extends Thread {
     //References to shared regions
     IHostessDP departureAirport;
 
-    public Hostess(int totalNumberOfPassengers, IHostessDP departureAirport) {
+    // Information Repository
+    IRepository repository;
+
+    public Hostess(int totalNumberOfPassengers, IHostessDP departureAirport, IRepository repository) {
         this.totalNumberOfPassengers = totalNumberOfPassengers;
         this.departureAirport = departureAirport;
         this.attendedPassengers = 0;

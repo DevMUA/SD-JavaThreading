@@ -3,24 +3,26 @@ package mainProgram;
 import common.ServerInformation;
 import stubs.DepartureAirportStub;
 import stubs.PlaneStub;
+import stubs.RepositoryStub;
 import sharedRegions.DepartureAirport.IPilotDP;
 import sharedRegions.Plane.IPilotP;
+import sharedRegions.Repository.IRepository;
 import threads.Pilot;
-import common.Parameters;
 
 public class PilotMain {
 
-    IPilotDP departureAirport = new DepartureAirportStub(ServerInformation.DEPARTUREAIRPORTHOSTNAME, ServerInformation.DEPARTUREAIRPORTSERVERPORT);
-    IPilotP plane = new PlaneStub(ServerInformation.PLANEHOSTNAME, ServerInformation.PLANESERVERPORT);
+    public static void main(String args[]) {
+        IPilotDP departureAirport = new DepartureAirportStub(ServerInformation.DEPARTUREAIRPORTHOSTNAME, ServerInformation.DEPARTUREAIRPORTSERVERPORT);
+        IPilotP plane = new PlaneStub(ServerInformation.PLANEHOSTNAME, ServerInformation.PLANESERVERPORT);
 
-    //RepositoryStub repository = new RepositoryStub();
+        IRepository repository = new RepositoryStub(ServerInformation.REPOSITORYHOSTNAME, ServerInformation.REPOSITORYPORT);
 
-    Pilot pilot = new Pilot(departureAirport, plane, repository);
-
-    pilot.start();
-    try{
-        pilot.join();
-    } catch(InterruptedException e) {
-        e.printStackTrace();
+        Pilot pilot = new Pilot(departureAirport, plane, repository);
+        pilot.start();
+        try {
+            pilot.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,8 +1,13 @@
 package stubs;
 
+import common.Message;
+import common.MethodType;
 import sharedRegions.DepartureAirport.IHostessDP;
 import sharedRegions.DepartureAirport.IPassengerDP;
 import sharedRegions.DepartureAirport.IPilotDP;
+import threads.Hostess;
+import threads.Passenger;
+import threads.Pilot;
 
 public class DepartureAirportStub implements IHostessDP, IPassengerDP, IPilotDP {
 
@@ -24,20 +29,37 @@ public class DepartureAirportStub implements IHostessDP, IPassengerDP, IPilotDP 
     */
 
     public int waitingForNextFlight() {
+        Hostess p = (Hostess) Thread.currentThread();
+
+        Message message = new Message(MethodType.WAITINGFORNEXTFLIGHT);
+        message.send(serverHostname, serverPort);
         return 0;
     }
     public int waitingForPassenger() {
+        Hostess p = (Hostess) Thread.currentThread();
+
+        Message message = new Message(MethodType.WAITINGFORPASSENGER);
+        message.send(serverHostname, serverPort);
         return 0;
     }
     public int askForDocuments() {
+        Hostess p = (Hostess) Thread.currentThread();
+
+        Message message = new Message(MethodType.ASKFORDOCUMENTS);
+        message.send(serverHostname, serverPort);
         return 0;
     }
     public int waitingToCheckPassenger() {
+        Hostess p = (Hostess) Thread.currentThread();
+
+        Message message = new Message(MethodType.WAITINGTOCHECKPASSENGER);
+        message.send(serverHostname, serverPort);
         return 0;
     }
 
     // preciso de dar fix a este boolean later;
     public boolean informReadyToFly() {
+        //?????
         return true;
     }
 
@@ -51,19 +73,31 @@ public class DepartureAirportStub implements IHostessDP, IPassengerDP, IPilotDP 
      */
 
     public int travelToAirport() {
+        Passenger p = (Passenger) Thread.currentThread();
 
+        Message message = new Message(p.getPassengerID(), MethodType.TRAVELTOAIPORT);
+        message.send(serverHostname, serverPort);
         return 0;
     }
     public int waitInQueue() {
+        Passenger p = (Passenger) Thread.currentThread();
 
+        Message message = new Message(p.getPassengerID(), MethodType.WAITINQUEUE);
+        message.send(serverHostname, serverPort);
         return 0;
     }
     public int showDocuments() {
+        Passenger p = (Passenger) Thread.currentThread();
 
+        Message message = new Message(p.getPassengerID(), MethodType.SHOWDOCUMENTS);
+        message.send(serverHostname, serverPort);
         return 0;
     }
     public int waitingToBeCheckedIn() {
+        Passenger p = (Passenger) Thread.currentThread();
 
+        Message message = new Message(p.getPassengerID(), MethodType.WAITINGTOBECHECKEDIN);
+        message.send(serverHostname, serverPort);
         return 0;
     }
 
@@ -79,10 +113,27 @@ public class DepartureAirportStub implements IHostessDP, IPassengerDP, IPilotDP 
      */
 
     public int informReadyBoarding() {
+        Pilot p = (Pilot) Thread.currentThread();
+
+        Message message = new Message(MethodType.INFORMREADYFORBOARDING);
+        message.send(serverHostname, serverPort);
         return 0;
     }
     public int waitingForBoarding() {
+        Pilot p = (Pilot) Thread.currentThread();
+
+        Message message = new Message(MethodType.WAITINGFORBOARDING);
+        message.send(serverHostname, serverPort);
         return 0;
+    }
+    public boolean isInformPilotToCeaseActivity() {
+        /*Todo
+        Pilot p = (Pilot) Thread.currentThread();
+
+        Message message = new Message(MethodType.WAITINGFORBOARDING);
+        message.send(serverHostname, serverPort);
+        return 0;*/
+        return true;
     }
 }
 

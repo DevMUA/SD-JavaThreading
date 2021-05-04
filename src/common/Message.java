@@ -1,5 +1,7 @@
 package common;
 
+import common.ClientCom;
+
 public class Message {
 
     //PASSENGER ID
@@ -33,5 +35,11 @@ public class Message {
 
     public void setOperationDone(Boolean value){
         this.operationDone = value;
+    }
+
+    public void send(String hostname, int port) {
+        ClientCom cc = new ClientCom(hostname , port);
+        cc.open();
+        cc.writeObject(this);
     }
 }

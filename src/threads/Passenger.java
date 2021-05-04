@@ -4,6 +4,7 @@ import common.ServerInformation;
 import sharedRegions.ArrivalAirport.IPassengerAR;
 import sharedRegions.DepartureAirport.IPassengerDP;
 import sharedRegions.Plane.IPassengerP;
+import sharedRegions.Repository.IRepository;
 
 public class Passenger extends Thread {
 
@@ -15,11 +16,15 @@ public class Passenger extends Thread {
     private IPassengerP plane;
     private IPassengerAR arrivalAirport;
 
-    public Passenger(int passengerID, IPassengerDP departureAirport, IPassengerP plane, IPassengerAR arrivalAirport) {
+    // Information Repository
+    IRepository repository;
+
+    public Passenger(int passengerID, IPassengerDP departureAirport, IPassengerP plane, IPassengerAR arrivalAirport, IRepository repository) {
         this.passengerID = passengerID;
         this.departureAirport = departureAirport;
         this.plane = plane;
         this.arrivalAirport = arrivalAirport;
+        this.repository = repository;
     }
 
     // PASSENGER LIFECYCLE
@@ -39,7 +44,7 @@ public class Passenger extends Thread {
         plane.leavePlane();
 
         //In arrival airport
-        arrivalAirport.leaveAirport();/
+        arrivalAirport.leaveAirport();
     }
 
     //Makes thread sleep for a random time between 5 and 20

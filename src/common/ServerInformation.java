@@ -14,7 +14,8 @@ public class ServerInformation {
     public static final int ARRIVALAIRPORTSERVERPORT = 4001;
     public static final String PLANEHOSTNAME = localHost;
     public static final int PLANESERVERPORT = 4002;
-    public static final int repository = 4003;
+    public static final String REPOSITORYHOSTNAME = localHost;
+    public static final int REPOSITORYPORT = 4003;
 
     public static final int NPASSENGERS = 21;
 

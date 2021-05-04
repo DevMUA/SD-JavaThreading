@@ -1,22 +1,24 @@
 package threads;
 
+import common.ServerInformation;
 import sharedRegions.DepartureAirport.DepartureAirport;
+import sharedRegions.DepartureAirport.IPilotDP;
+import sharedRegions.Plane.IPilotP;
 import sharedRegions.Plane.Plane;
 import sharedRegions.Repository.IRepository;
-import common.Parameters;
 
 import state.SPilot;
 
 public class Pilot extends Thread {
 
     //References to shared regions
-    DepartureAirport departureAirport;
-    Plane plane;
+    IPilotDP departureAirport;
+    IPilotP plane;
 
     // Information Repository
     IRepository repository;
 
-    public Pilot(DepartureAirport departureAirport, Plane plane, IRepository repository) {
+    public Pilot(IPilotDP departureAirport, IPilotP plane, IRepository repository) {
         this.departureAirport = departureAirport;
         this.plane = plane;
 
@@ -47,7 +49,7 @@ public class Pilot extends Thread {
 
     private void fly(){
         try {
-            Thread.sleep(Parameters.PLANETRAVELTIME);
+            Thread.sleep(ServerInformation.PLANETRAVELTIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

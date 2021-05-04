@@ -2,20 +2,24 @@ package mainProgram;
 
 import common.ServerInformation;
 import stubs.DepartureAirportStub;
+import stubs.RepositoryStub;
 import sharedRegions.DepartureAirport.IHostessDP;
+import sharedRegions.Repository.IRepository;
 import threads.Hostess;
 
 public class HostessMain {
 
-    IHostessDP departureAirport = new DepartureAirportStub(ServerInformation.DEPARTUREAIRPORTHOSTNAME, ServerInformation.DEPARTUREAIRPORTSERVERPORT);
+    public static void main(String args[]) {
+        IHostessDP departureAirport = new DepartureAirportStub(ServerInformation.DEPARTUREAIRPORTHOSTNAME, ServerInformation.DEPARTUREAIRPORTSERVERPORT);
 
-    //RepositoryStub repository = new RepositoryStub();
+        IRepository repository = new RepositoryStub(ServerInformation.REPOSITORYHOSTNAME, ServerInformation.REPOSITORYPORT);
 
-    Hostess pilot = new Hostess(ServerInformation.NPASSENGERS,departureAirport);
-
-    pilot.start();
-    try{
-        pilot.join();
-    } catch(InterruptedException e) {
-        e.printStackTrace();
+        Hostess pilot = new Hostess(ServerInformation.NPASSENGERS, departureAirport, repository);
+        pilot.start();
+        try {
+            pilot.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+}
