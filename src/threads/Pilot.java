@@ -1,5 +1,6 @@
 package threads;
 
+import common.ServerInformation;
 import sharedRegions.DepartureAirport.DepartureAirport;
 import sharedRegions.Plane.Plane;
 import sharedRegions.Repository.IRepository;
@@ -47,7 +48,7 @@ public class Pilot extends Thread {
 
     private void fly(){
         try {
-            Thread.sleep(Parameters.PLANETRAVELTIME);
+            Thread.sleep(ServerInformation.PLANETRAVELTIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

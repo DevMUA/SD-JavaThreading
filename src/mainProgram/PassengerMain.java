@@ -8,7 +8,7 @@ import sharedRegions.DepartureAirport.IPassengerDP;
 import sharedRegions.Plane.IPassengerP;
 import sharedRegions.ArrivalAirport.IPassengerAR;
 import threads.Passenger;
-import common.Parameters;
+
 
 public class PassengerMain {
 

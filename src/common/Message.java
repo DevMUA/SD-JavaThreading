@@ -8,6 +8,7 @@ public class Message {
     private MethodType methodType;
 
     private boolean operationDone;
+    private boolean responseBoolValue;
 
     public Message(int id, MethodType methodType){
         this.id = id;
@@ -31,7 +32,11 @@ public class Message {
         return this.id;
     }
 
-    public void setOperationDone(Boolean value){
+    public void setOperationDone(boolean value){
         this.operationDone = value;
+    }
+
+    public void setResponseBoolValue(boolean value){
+        this.responseBoolValue = value;
     }
 }

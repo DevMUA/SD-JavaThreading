@@ -6,7 +6,7 @@ import stubs.PlaneStub;
 import sharedRegions.DepartureAirport.IPilotDP;
 import sharedRegions.Plane.IPilotP;
 import threads.Pilot;
-import common.Parameters;
+
 
 public class PilotMain {
 

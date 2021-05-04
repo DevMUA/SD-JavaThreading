@@ -39,7 +39,7 @@ public class Passenger extends Thread {
         plane.leavePlane();
 
         //In arrival airport
-        arrivalAirport.leaveAirport();/
+        arrivalAirport.leaveAirport();
     }
 
     //Makes thread sleep for a random time between 5 and 20
