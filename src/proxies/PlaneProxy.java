@@ -21,19 +21,38 @@ public class PlaneProxy implements SharedRegionProxy{
 
         switch(msg.getMethodType()){
             case BOARDPLANE:
+                sp.setPassengerID(msg.getID());
+                plane.boardPlane();
+                response.setOperationDone(true);
                 break;
 
             case WAITFORPLANETOLAND:
+                sp.setPassengerID(msg.getID());
+                plane.waitForPlaneToLand();
+                response.setOperationDone(true);
                 break;
 
             case LEAVEPLANE:
+                sp.setPassengerID(msg.getID());
+                plane.leavePlane();
+                response.setOperationDone(true);
                 break;
 
             case ANNOUNCEARRIVAL:
+                plane.announceArrival();
+                response.setOperationDone(true);
                 break;
 
             case WAITINGFORDEBOARDING:
+                plane.waitingForDeboarding();
+                response.setOperationDone(true);
                 break;
+
+            case INFORMPLANEISNOLONGERNEEDED:
+                response.setOperationDone(true);
+                synchronized (this){
+                    isRunning = false;
+                }
         }
         return response;
     }

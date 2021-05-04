@@ -10,6 +10,7 @@ public class Message {
     private MethodType methodType;
 
     private boolean operationDone;
+    private boolean responseBoolValue;
 
     public Message(int id, MethodType methodType){
         this.id = id;
@@ -33,12 +34,16 @@ public class Message {
         return this.id;
     }
 
-    public void setOperationDone(Boolean value){
+    public void setOperationDone(boolean value){
         this.operationDone = value;
     }
 
+    public void setResponseBoolValue(boolean value){
+        this.responseBoolValue = value;
+    }
+
     public void send(String hostname, int port) {
-        ClientCom cc = new ClientCom(hostname , port);
+        ClientCom cc = new ClientCom(hostname, port);
         cc.open();
         cc.writeObject(this);
     }
