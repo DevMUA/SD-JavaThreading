@@ -1,7 +1,7 @@
 package proxies;
 
-import Common.Message;
-import Common.ServiceProvider;
+import common.Message;
+import common.ServiceProvider;
 import sharedRegions.Plane.Plane;
 
 public class PlaneProxy implements SharedRegionProxy{

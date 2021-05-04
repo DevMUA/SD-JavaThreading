@@ -27,11 +27,13 @@ public class ArrivalAirport implements IPassengerAR {
      */
 
     @Override
-    public synchronized void leaveAirport() {
+    public synchronized int leaveAirport() {
         Passenger p = (Passenger) Thread.currentThread();
         int passengerID = p.getPassengerID();
 
         numberOfArrivedPassengers++;
+
+        return 0;
     }
 
     public int getNumberOfArrivedPassengers() {

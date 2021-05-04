@@ -3,7 +3,7 @@ package threads;
 import sharedRegions.DepartureAirport.DepartureAirport;
 import sharedRegions.Plane.Plane;
 import sharedRegions.Repository.IRepository;
-import sharedRegions.util.GeneralTool;
+import common.Parameters;
 
 import state.SPilot;
 
@@ -46,10 +46,8 @@ public class Pilot extends Thread {
     }
 
     private void fly(){
-        int randomSleepValue = GeneralTool.getRandomNumber(1,2);
-
         try {
-            Thread.sleep(randomSleepValue*1000);
+            Thread.sleep(Parameters.PLANETRAVELTIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

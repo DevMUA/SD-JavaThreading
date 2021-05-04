@@ -1,12 +1,12 @@
 package proxies;
 
-import Common.Message;
-import Common.ServiceProvider;
+import common.Message;
+import common.ServiceProvider;
 import sharedRegions.ArrivalAirport.ArrivalAirport;
 
 public class ArrivalAirportProxy implements SharedRegionProxy{
 
-    private ArrivalAirport arrivalAirport;
+    private final ArrivalAirport arrivalAirport;
 
     private boolean isRunning;
 

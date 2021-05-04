@@ -1,6 +1,6 @@
 package proxies;
 
-import Common.Message;
+import common.Message;
 
 public interface SharedRegionProxy {
 

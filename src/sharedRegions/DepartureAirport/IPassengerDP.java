@@ -1,8 +1,8 @@
 package sharedRegions.DepartureAirport;
 
 public interface IPassengerDP {
-    public void travelToAirport();
-    public void waitInQueue();
-    public void showDocuments();
-    public void waitingToBeCheckedIn();
+    public int travelToAirport();
+    public int waitInQueue();
+    public int showDocuments();
+    public int waitingToBeCheckedIn();
 }

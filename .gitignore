@@ -1,6 +1,10 @@
-*.class
+# General Files
 *.txt
 
+# Java
+*.class
+
+# IntelliJ
 *.iml
 *.ipr
 *.iws

@@ -1,9 +1,9 @@
 package threads;
 
-import sharedRegions.ArrivalAirport.ArrivalAirport;
-import sharedRegions.DepartureAirport.DepartureAirport;
-import sharedRegions.Plane.Plane;
-import sharedRegions.util.GeneralTool;
+import common.ServerInformation;
+import sharedRegions.ArrivalAirport.IPassengerAR;
+import sharedRegions.DepartureAirport.IPassengerDP;
+import sharedRegions.Plane.IPassengerP;
 
 public class Passenger extends Thread {
 
@@ -11,11 +11,11 @@ public class Passenger extends Thread {
     private int passengerID;
 
     //References to shared regions
-    DepartureAirport departureAirport;
-    Plane plane;
-    ArrivalAirport arrivalAirport;
+    private IPassengerDP departureAirport;
+    private IPassengerP plane;
+    private IPassengerAR arrivalAirport;
 
-    public Passenger(int passengerID, DepartureAirport departureAirport, Plane plane, ArrivalAirport arrivalAirport) {
+    public Passenger(int passengerID, IPassengerDP departureAirport, IPassengerP plane, IPassengerAR arrivalAirport) {
         this.passengerID = passengerID;
         this.departureAirport = departureAirport;
         this.plane = plane;
@@ -39,15 +39,13 @@ public class Passenger extends Thread {
         plane.leavePlane();
 
         //In arrival airport
-        arrivalAirport.leaveAirport();
+        arrivalAirport.leaveAirport();/
     }
 
     //Makes thread sleep for a random time between 5 and 20
-    private void goingToAirport(){
-        int randomSleepValue = GeneralTool.getRandomNumber(5,25);
-
+    private void goingToAirport() {
         try {
-            Thread.sleep(randomSleepValue*1000);
+            Thread.sleep(ServerInformation.AIRPORTTRAVELTIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

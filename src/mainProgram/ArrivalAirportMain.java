@@ -1,10 +1,9 @@
 package mainProgram;
 
-import Common.ServerCom;
-import Common.ServerInformation;
-import Common.ServiceProvider;
+import common.ServerCom;
+import common.ServerInformation;
+import common.ServiceProvider;
 import proxies.ArrivalAirportProxy;
-import proxies.DepartureAirportProxy;
 import sharedRegions.ArrivalAirport.ArrivalAirport;
 import sharedRegions.Repository.Repository;
 
@@ -23,7 +22,7 @@ public class ArrivalAirportMain {
         ArrivalAirport arrivalAirport = new ArrivalAirport(temporaryFix);
         ArrivalAirportProxy arrivalAirportProxy = new ArrivalAirportProxy(arrivalAirport);
 
-        serverCom = new ServerCom(ServerInformation.departureAirportServerPort);
+        serverCom = new ServerCom(ServerInformation.DEPARTUREAIRPORTSERVERPORT);
         serverCom.start();
 
         while(arrivalAirportProxy.isRunning()){
