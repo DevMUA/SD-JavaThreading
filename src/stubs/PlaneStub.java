@@ -1,5 +1,8 @@
 package stubs;
 
+import common.ClientCom;
+import common.Message;
+import common.MethodType;
 import sharedRegions.Plane.IPassengerP;
 import sharedRegions.Plane.IPilotP;
 
@@ -22,12 +25,31 @@ public class PlaneStub implements IPassengerP, IPilotP {
     */
 
     public int boardPlane() {
+        Message message = new Message(MethodType.BOARDPLANE);
+
+        ClientCom cc = new ClientCom(serverHostname, serverPort);
+        cc.open();
+        cc.writeObject(message);
+
+        Message response = (Message) cc.readObject();
         return 0;
     }
     public int waitForPlaneToLand() {
+        Message message = new Message(MethodType.WAITFORPLANETOLAND);
+        ClientCom cc = new ClientCom(serverHostname, serverPort);
+        cc.open();
+        cc.writeObject(message);
+
+        Message response = (Message) cc.readObject();
         return 0;
     }
     public int leavePlane() {
+        Message message = new Message(MethodType.LEAVEPLANE);
+        ClientCom cc = new ClientCom(serverHostname, serverPort);
+        cc.open();
+        cc.writeObject(message);
+
+        Message response = (Message) cc.readObject();
         return 0;
     }
 
@@ -43,9 +65,21 @@ public class PlaneStub implements IPassengerP, IPilotP {
      */
 
     public int announceArrival() {
+        Message message = new Message(MethodType.ANNOUNCEARRIVAL);
+        ClientCom cc = new ClientCom(serverHostname, serverPort);
+        cc.open();
+        cc.writeObject(message);
+
+        Message response = (Message) cc.readObject();
         return 0;
     }
     public int waitingForDeboarding() {
+        Message message = new Message(MethodType.WAITINGFORDEBOARDING);
+        ClientCom cc = new ClientCom(serverHostname, serverPort);
+        cc.open();
+        cc.writeObject(message);
+
+        Message response = (Message) cc.readObject();
         return 0;
     }
 

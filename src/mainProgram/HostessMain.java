@@ -14,10 +14,10 @@ public class HostessMain {
 
         IRepository repository = new RepositoryStub(ServerInformation.REPOSITORYHOSTNAME, ServerInformation.REPOSITORYPORT);
 
-        Hostess pilot = new Hostess(ServerInformation.NPASSENGERS, departureAirport, repository);
-        pilot.start();
+        Hostess hostess = new Hostess(ServerInformation.NPASSENGERS, departureAirport, repository);
+        hostess.start();
         try {
-            pilot.join();
+            hostess.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

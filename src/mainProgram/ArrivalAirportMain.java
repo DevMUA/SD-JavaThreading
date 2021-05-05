@@ -7,6 +7,8 @@ import proxies.ArrivalAirportProxy;
 import sharedRegions.ArrivalAirport.ArrivalAirport;
 import sharedRegions.Repository.Repository;
 
+import java.net.SocketTimeoutException;
+
 public class ArrivalAirportMain {
     public static void main(String[] args) {
 
@@ -22,13 +24,19 @@ public class ArrivalAirportMain {
         ArrivalAirport arrivalAirport = new ArrivalAirport(temporaryFix);
         ArrivalAirportProxy arrivalAirportProxy = new ArrivalAirportProxy(arrivalAirport);
 
-        serverCom = new ServerCom(ServerInformation.DEPARTUREAIRPORTSERVERPORT);
+        serverCom = new ServerCom(ServerInformation.ARRIVALAIRPORTSERVERPORT);
         serverCom.start();
 
         while(arrivalAirportProxy.isRunning()){
-            serverConn = serverCom.accept();
-            serviceProvider = new ServiceProvider(arrivalAirportProxy,serverConn);
-            serviceProvider.start();
+            try {
+                serverConn = serverCom.accept();
+
+                serviceProvider = new ServiceProvider(arrivalAirportProxy, serverConn);
+                serviceProvider.start();
+            }
+             catch (SocketTimeoutException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

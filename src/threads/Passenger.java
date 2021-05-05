@@ -37,7 +37,6 @@ public class Passenger extends Thread {
         departureAirport.waitInQueue();
         departureAirport.showDocuments();
         departureAirport.waitingToBeCheckedIn();
-
         //In plane
         plane.boardPlane();
         plane.waitForPlaneToLand();

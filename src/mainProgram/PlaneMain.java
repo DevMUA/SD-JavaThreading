@@ -7,6 +7,8 @@ import proxies.PlaneProxy;
 import sharedRegions.Plane.Plane;
 import sharedRegions.Repository.Repository;
 
+import java.net.SocketTimeoutException;
+
 public class PlaneMain {
     public static void main(String[] args) {
 
@@ -22,13 +24,18 @@ public class PlaneMain {
         Plane plane = new Plane(temporaryFix);
         PlaneProxy planeProxy = new PlaneProxy(plane);
 
-        serverCom = new ServerCom(ServerInformation.DEPARTUREAIRPORTSERVERPORT);
+        serverCom = new ServerCom(ServerInformation.PLANESERVERPORT);
         serverCom.start();
 
         while(planeProxy.isRunning()){
-            serverConn = serverCom.accept();
-            serviceProvider = new ServiceProvider(planeProxy,serverConn);
-            serviceProvider.start();
+            try {
+                serverConn = serverCom.accept();
+                serviceProvider = new ServiceProvider(planeProxy, serverConn);
+                serviceProvider.start();
+            }
+            catch(SocketTimeoutException e){
+
+            }
         }
     }
 }

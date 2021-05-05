@@ -13,6 +13,7 @@ public class Message implements Serializable {
 
     private boolean operationDone;
     private boolean responseBoolValue;
+    private boolean hostessAttendendedAllPassengers;
 
     public Message(int id, MethodType methodType){
         this.id = id;
@@ -40,13 +41,24 @@ public class Message implements Serializable {
         this.operationDone = value;
     }
 
+    public boolean getOperationDone(){
+        return operationDone;
+    }
+
     public void setResponseBoolValue(boolean value){
         this.responseBoolValue = value;
     }
 
-    public void send(String hostname, int port) {
-        ClientCom cc = new ClientCom(hostname, port);
-        cc.open();
-        cc.writeObject(this);
+    public boolean getResponseBoolValue(){
+        return responseBoolValue;
     }
+
+    public void sethostessAttendendedAllPassengers(boolean value){
+        hostessAttendendedAllPassengers = value;
+    }
+
+    public boolean gethostessAttendendedAllPassengers(){
+        return hostessAttendendedAllPassengers;
+    }
+
 }

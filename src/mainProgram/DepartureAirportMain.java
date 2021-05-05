@@ -7,6 +7,8 @@ import proxies.DepartureAirportProxy;
 import sharedRegions.DepartureAirport.DepartureAirport;
 import sharedRegions.Repository.Repository;
 
+import java.net.SocketTimeoutException;
+
 public class DepartureAirportMain {
 
     public static void main(String[] args) {
@@ -27,9 +29,15 @@ public class DepartureAirportMain {
         serverCom.start();
 
         while(departureAirportProxy.isRunning()){
+            try {
                 serverConn = serverCom.accept();
-                serviceProvider = new ServiceProvider(departureAirportProxy,serverConn);
+
+                serviceProvider = new ServiceProvider(departureAirportProxy, serverConn);
                 serviceProvider.start();
+            }
+                 catch (SocketTimeoutException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -11,6 +11,8 @@ public class ServiceProvider extends Thread implements HostessInterface,PilotInt
     //Passenger ID
     private int id;
 
+    private boolean allPassengersAttended;
+
     public ServiceProvider(SharedRegionProxy sharedRegion, ServerCom serverCom){
         this.sharedRegion = sharedRegion;
         this.serverCom = serverCom;
@@ -30,5 +32,16 @@ public class ServiceProvider extends Thread implements HostessInterface,PilotInt
 
     public void setPassengerID(int id){
         this.id = id;
+    }
+
+    public void setAllPassengersAttended(boolean value) {
+        allPassengersAttended = value;
+    }
+
+    public boolean allPassengersAttended(){
+        if(allPassengersAttended)
+            return true;
+        else
+            return false;
     }
 }

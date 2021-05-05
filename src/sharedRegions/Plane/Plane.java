@@ -1,5 +1,7 @@
 package sharedRegions.Plane;
 
+import common.PassengerInterface;
+import common.ServiceProvider;
 import sharedRegions.Repository.IRepository;
 
 import state.SPilot;
@@ -47,13 +49,13 @@ public class Plane implements IPassengerP, IPilotP {
     //Passenger enters the plane list
     @Override
     public synchronized int boardPlane() {
-        Passenger p = (Passenger) Thread.currentThread();
+        PassengerInterface p = (ServiceProvider) Thread.currentThread();
         int passengerID = p.getPassengerID();
 
         passengerQueue.add(p.getPassengerID());
         
-        repository.updateInf(passengerQueue.size());
-        repository.update(passengerID, SPassenger.IN_FLIGHT);
+        //repository.updateInf(passengerQueue.size());
+        //repository.update(passengerID, SPassenger.IN_FLIGHT);
         return 0;
     }
 
@@ -73,13 +75,13 @@ public class Plane implements IPassengerP, IPilotP {
     //Passenger leaves the plane and if he is the last notifies the pilot
     @Override
     public synchronized int leavePlane() {
-        Passenger p = (Passenger) Thread.currentThread();
+        PassengerInterface p = (ServiceProvider) Thread.currentThread();
         int passengerID = p.getPassengerID();
 
         passengerQueue.remove(passengerID);
 
-        repository.updateInf(passengerQueue.size());
-        repository.update(passengerID, SPassenger.AT_DESTINATION);
+        //repository.updateInf(passengerQueue.size());
+        //repository.update(passengerID, SPassenger.AT_DESTINATION);
 
         if(passengerQueue.size() == 0){
             leaveThePlane = true;
@@ -102,7 +104,7 @@ public class Plane implements IPassengerP, IPilotP {
     //Pilot announces arrival to passengers
     @Override
     public synchronized int announceArrival() {
-        repository.update(SPilot.DEBOARDING);
+        //repository.update(SPilot.DEBOARDING);
         announceArrival = true;
         notifyAll();
         return 0;

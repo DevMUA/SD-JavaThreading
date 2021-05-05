@@ -1,5 +1,7 @@
 package sharedRegions.ArrivalAirport;
 
+import common.PassengerInterface;
+import common.ServiceProvider;
 import sharedRegions.Repository.IRepository;
 
 import state.SPassenger;
@@ -28,7 +30,7 @@ public class ArrivalAirport implements IPassengerAR {
 
     @Override
     public synchronized int leaveAirport() {
-        Passenger p = (Passenger) Thread.currentThread();
+        PassengerInterface p = (ServiceProvider) Thread.currentThread();
         int passengerID = p.getPassengerID();
 
         numberOfArrivedPassengers++;

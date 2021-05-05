@@ -41,7 +41,8 @@ public class DepartureAirportProxy implements SharedRegionProxy{
                 break;
 
             case INFORMREADYTOFLY:
-                departureAirport.informReadyToFly();
+                sp.setAllPassengersAttended(msg.gethostessAttendendedAllPassengers());
+                response.setResponseBoolValue(departureAirport.informReadyToFly());
                 response.setOperationDone(true);
                 break;
 

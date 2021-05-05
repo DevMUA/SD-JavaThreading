@@ -29,8 +29,10 @@ public class ArrivalAirportProxy implements SharedRegionProxy{
                 arrivalAirport.leaveAirport();
                 synchronized (this){
                     count++;
-                    if(count== ServerInformation.NPASSENGERS)
+                    if(count == ServerInformation.NPASSENGERS){
                         isRunning = false;
+                        System.out.println("Shutdown arrival airport");
+                    }
                 }
                 response.setOperationDone(true);
         }

@@ -124,7 +124,7 @@ public class ServerCom
      *    @return reference to the commmunication channel
      */
 
-    public ServerCom accept ()
+    public ServerCom accept () throws SocketTimeoutException
     {
         ServerCom scon;                                      // communication channel
 
@@ -137,6 +137,9 @@ public class ServerCom
                 " - the listening socket was closed during the listening process!");
             e.printStackTrace ();
             System.exit (1);
+        }
+        catch(SocketTimeoutException e){
+            throw e;
         }
         catch (IOException e)
         { System.out.println (Thread.currentThread ().getName () +

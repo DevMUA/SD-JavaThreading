@@ -33,11 +33,9 @@ public class Pilot extends Thread {
 
             departureAirport.informReadyBoarding();
             departureAirport.waitingForBoarding();
-            
             //Fly to destination
             repository.update(SPilot.FLYING_FORWARD);
             fly();
-            
             plane.announceArrival();
             plane.waitingForDeboarding();
             
