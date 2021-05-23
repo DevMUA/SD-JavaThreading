@@ -33,13 +33,26 @@ public class Passenger extends Thread {
 
         //In departure airport
         goingToAirport();
+        System.out.println(("Passenger: Chegou"));
         departureAirport.travelToAirport();
+
+        System.out.println(("Passenger: na Queue"));
         departureAirport.waitInQueue();
+
+        System.out.println(("Passenger: mostrar docs"));
         departureAirport.showDocuments();
+
+        System.out.println(("Passenger: checkedIn"));
         departureAirport.waitingToBeCheckedIn();
         //In plane
+
+        System.out.println(("Passenger: boardplane"));
         plane.boardPlane();
+
+        System.out.println(("Passenger: esperar por aterrar"));
         plane.waitForPlaneToLand();
+
+        System.out.println(("Passenger: desmerdar"));
         plane.leavePlane();
 
         //In arrival airport

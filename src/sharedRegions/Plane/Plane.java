@@ -3,6 +3,8 @@ package sharedRegions.Plane;
 import common.PassengerInterface;
 import common.ServiceProvider;
 import sharedRegions.Repository.IRepository;
+import state.SPassenger;
+import state.SPilot;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -49,8 +51,8 @@ public class Plane implements IPassengerP, IPilotP {
 
         passengerQueue.add(p.getPassengerID());
         
-        //repository.updateInf(passengerQueue.size());
-        //repository.update(passengerID, SPassenger.IN_FLIGHT);
+        repository.updateInf(passengerQueue.size());
+        repository.update(passengerID, SPassenger.IN_FLIGHT);
         return 0;
     }
 
@@ -75,8 +77,8 @@ public class Plane implements IPassengerP, IPilotP {
 
         passengerQueue.remove(passengerID);
 
-        //repository.updateInf(passengerQueue.size());
-        //repository.update(passengerID, SPassenger.AT_DESTINATION);
+        repository.updateInf(passengerQueue.size());
+        repository.update(passengerID, SPassenger.AT_DESTINATION);
 
         if(passengerQueue.size() == 0){
             leaveThePlane = true;
@@ -99,7 +101,7 @@ public class Plane implements IPassengerP, IPilotP {
     //Pilot announces arrival to passengers
     @Override
     public synchronized int announceArrival() {
-        //repository.update(SPilot.DEBOARDING);
+        repository.update(SPilot.DEBOARDING);
         announceArrival = true;
         notifyAll();
         return 0;

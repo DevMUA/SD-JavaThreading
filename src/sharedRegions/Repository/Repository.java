@@ -112,7 +112,7 @@ public class Repository implements IRepository {
     }
 
     private void write(String lines) {
-        System.out.print(lines);
+        //System.out.print(lines);
         try {
             Files.write(
                     Paths.get("log.txt"),

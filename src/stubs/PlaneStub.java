@@ -5,6 +5,9 @@ import common.Message;
 import common.MethodType;
 import sharedRegions.Plane.IPassengerP;
 import sharedRegions.Plane.IPilotP;
+import threads.Passenger;
+
+import java.awt.*;
 
 public class PlaneStub implements IPassengerP, IPilotP {
 
@@ -26,7 +29,9 @@ public class PlaneStub implements IPassengerP, IPilotP {
     */
 
     public int boardPlane() {
-        Message message = new Message(MethodType.BOARDPLANE);
+        Passenger p = (Passenger) Thread.currentThread();
+
+        Message message = new Message(p.getPassengerID(), MethodType.BOARDPLANE);
 
         ClientCom cc = new ClientCom(serverHostname, serverPort);
         cc.open();
@@ -36,7 +41,9 @@ public class PlaneStub implements IPassengerP, IPilotP {
         return 0;
     }
     public int waitForPlaneToLand() {
-        Message message = new Message(MethodType.WAITFORPLANETOLAND);
+        Passenger p = (Passenger) Thread.currentThread();
+
+        Message message = new Message(p.getPassengerID(), MethodType.WAITFORPLANETOLAND);
         ClientCom cc = new ClientCom(serverHostname, serverPort);
         cc.open();
         cc.writeObject(message);
@@ -45,7 +52,9 @@ public class PlaneStub implements IPassengerP, IPilotP {
         return 0;
     }
     public int leavePlane() {
-        Message message = new Message(MethodType.LEAVEPLANE);
+        Passenger p = (Passenger) Thread.currentThread();
+
+        Message message = new Message(p.getPassengerID(), MethodType.LEAVEPLANE);
         ClientCom cc = new ClientCom(serverHostname, serverPort);
         cc.open();
         cc.writeObject(message);

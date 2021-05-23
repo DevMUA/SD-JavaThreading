@@ -6,6 +6,8 @@ import common.ServiceProvider;
 import sharedRegions.Repository.IRepository;
 
 import state.SHostess;
+import state.SPassenger;
+import state.SPilot;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -73,7 +75,7 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
     //Hostess waits for the plane to be ready for boarding
     @Override
     public synchronized int waitingForNextFlight() {
-        //repository.update(SHostess.WAITING_FOR_FLIGHT);
+        repository.update(SHostess.WAITING_FOR_FLIGHT);
         
         while(!informPlaneReadyForBoarding){
             try {
@@ -88,7 +90,7 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
     //hostess removes one person from the queue and notifies all passenger (so they check if they were the one removed)
     @Override
     public synchronized int waitingForPassenger() {
-        //repository.update(SHostess.WAITING_FOR_PASSENGER);
+        repository.update(SHostess.WAITING_FOR_PASSENGER);
         
         waitForNextPassenger = false;
         notifyAll();
@@ -102,8 +104,8 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
         
         int nextPassenger = passengerQueue.remove();
         
-        //repository.updateInq(passengerQueue.size());
-        //repository.update(nextPassenger, SHostess.CHECK_PASSENGER);
+        repository.updateInq(passengerQueue.size());
+        repository.update(nextPassenger, SHostess.CHECK_PASSENGER);
         
         notifyAll();
         return 0;
@@ -155,7 +157,7 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
         // 3. PASSENGERS IN QUEUE ARE 0 AND HOSTESS KNOWS THOSE WERE THE LAST ONES
         if((passengerQueue.size() == 0 && passengersInPlane > MIN) || passengersInPlane == MAX || (passengerQueue.size() == 0 && h.allPassengersAttended())){
 
-            //repository.update(SHostess.READY_TO_FLY);
+            repository.update(SHostess.READY_TO_FLY);
             
             informPlaneReadyToTakeOff = true;
             if(h.allPassengersAttended()){
@@ -163,7 +165,7 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
             }
             notifyAll();
 
-            while(informPlaneReadyForBoarding){
+            while(informPlaneReadyForBoarding) {
                 try {
                     wait();
                 } catch (InterruptedException e) {
@@ -195,8 +197,8 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
 
         passengerQueue.add(passengerID);
         
-        //repository.updateInq(passengerQueue.size());
-        //repository.update(passengerID, SPassenger.IN_QUEUE);
+        repository.updateInq(passengerQueue.size());
+        repository.update(passengerID, SPassenger.IN_QUEUE);
 
         notifyAll();
         return 0;
@@ -263,7 +265,7 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
     //Pilot informs hostess that plane is ready for boarding
     @Override
     public synchronized int informReadyBoarding() {
-        //repository.update(SPilot.READY_FOR_BOARDING);
+        repository.update(SPilot.READY_FOR_BOARDING);
         
         informPlaneReadyForBoarding = true;
         notifyAll();
@@ -273,7 +275,7 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
     //Pilot waits until hostess gives signal that plane is ready for boarding and if it is signals that there is no more boarding
     @Override
     public synchronized int waitingForBoarding() {
-        //repository.update(SPilot.WAITING_FOR_BOARDING);
+        repository.update(SPilot.WAITING_FOR_BOARDING);
         
         while(!informPlaneReadyToTakeOff){
             try {

@@ -26,13 +26,19 @@ public class Hostess extends Thread {
 
         while(!allPassengersAttended()) {
             boolean flightFull = false;
-            
+
+            System.out.println(("Hostess: Esperar voo"));
             departureAirport.waitingForNextFlight();
+
             while(!flightFull) {
+                System.out.println(("Hostess: Esperar passageiros"));
                 departureAirport.waitingForPassenger();
+                System.out.println(("Hostess: Pedir Documentos"));
                 departureAirport.askForDocuments();
+                System.out.println(("Hostess: Esperar por checkar passageiro"));
                 departureAirport.waitingToCheckPassenger();
                 attendedPassengers++;
+                System.out.println(("Hostess: Informar pronto para voar?"));
                 flightFull = departureAirport.informReadyToFly();
             }
         }

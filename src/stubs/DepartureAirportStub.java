@@ -34,10 +34,12 @@ public class DepartureAirportStub implements IHostessDP, IPassengerDP, IPilotDP 
 
         Message message = new Message(MethodType.WAITINGFORNEXTFLIGHT);
         ClientCom cc = new ClientCom(serverHostname, serverPort);
+
         cc.open();
         cc.writeObject(message);
-
         Message response = (Message) cc.readObject();
+
+        cc.close();
         return 0;
     }
     public int waitingForPassenger() {

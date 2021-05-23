@@ -4,6 +4,7 @@ import common.ClientCom;
 import common.Message;
 import common.MethodType;
 import sharedRegions.ArrivalAirport.IPassengerAR;
+import threads.Passenger;
 
 public class ArrivalAirportStub implements IPassengerAR {
 
@@ -16,7 +17,9 @@ public class ArrivalAirportStub implements IPassengerAR {
     }
 
     public int leaveAirport() {
-        Message message = new Message(MethodType.LEAVEAIRPORT);
+        Passenger p = (Passenger) Thread.currentThread();
+
+        Message message = new Message(p.getPassengerID(), MethodType.LEAVEAIRPORT);
         ClientCom cc = new ClientCom(serverHostname, serverPort);
         cc.open();
         cc.writeObject(message);
