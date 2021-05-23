@@ -4,11 +4,6 @@ import common.PassengerInterface;
 import common.ServiceProvider;
 import sharedRegions.Repository.IRepository;
 
-import state.SPilot;
-import state.SPassenger;
-
-import threads.Passenger;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -23,14 +18,14 @@ public class Plane implements IPassengerP, IPilotP {
     private boolean announceArrival;
 
     // Information Repository
-    IRepository repository;
+    private final IRepository repository;
 
     public Plane(IRepository repository) {
-        passengerQueue = new LinkedList<Integer>();
-
+        passengerQueue = new LinkedList<>();
 
         //passenger variables
         this.leaveThePlane = false;
+
         //pilot variables
         this.announceArrival = false;
 

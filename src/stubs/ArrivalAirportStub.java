@@ -7,13 +7,14 @@ import sharedRegions.ArrivalAirport.IPassengerAR;
 
 public class ArrivalAirportStub implements IPassengerAR {
 
-    private String serverHostname;
-    private int serverPort;
+    private final String serverHostname;
+    private final int serverPort;
 
     public ArrivalAirportStub(String hostname, int port) {
         serverHostname = hostname;
         serverPort = port;
     }
+
     public int leaveAirport() {
         Message message = new Message(MethodType.LEAVEAIRPORT);
         ClientCom cc = new ClientCom(serverHostname, serverPort);

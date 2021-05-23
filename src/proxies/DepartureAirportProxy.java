@@ -4,18 +4,18 @@ import common.Message;
 import common.ServiceProvider;
 import sharedRegions.DepartureAirport.DepartureAirport;
 
-public class DepartureAirportProxy implements SharedRegionProxy{
+public class DepartureAirportProxy implements SharedRegionProxy {
 
     private DepartureAirport departureAirport;
 
     private boolean isRunning;
 
-    public DepartureAirportProxy(DepartureAirport departureAirport){
+    public DepartureAirportProxy(DepartureAirport departureAirport) {
         this.departureAirport = departureAirport;
         this.isRunning = true;
     }
 
-    public Message processAndReply(Message msg){
+    public Message processAndReply(Message msg) {
         Message response = new Message(false);
         ServiceProvider sp = (ServiceProvider) Thread.currentThread();
 
@@ -41,31 +41,31 @@ public class DepartureAirportProxy implements SharedRegionProxy{
                 break;
 
             case INFORMREADYTOFLY:
-                sp.setAllPassengersAttended(msg.gethostessAttendendedAllPassengers());
+                sp.setAllPassengersAttended(msg.hasHostessAttendendedAllPassengers());
                 response.setResponseBoolValue(departureAirport.informReadyToFly());
                 response.setOperationDone(true);
                 break;
 
             case TRAVELTOAIPORT:
-                sp.setPassengerID(msg.getID());
+                sp.setPassengerID(msg.getPassengerID());
                 departureAirport.travelToAirport();
                 response.setOperationDone(true);
                 break;
 
             case WAITINQUEUE:
-                sp.setPassengerID(msg.getID());
+                sp.setPassengerID(msg.getPassengerID());
                 departureAirport.waitInQueue();
                 response.setOperationDone(true);
                 break;
 
             case SHOWDOCUMENTS:
-                sp.setPassengerID(msg.getID());
+                sp.setPassengerID(msg.getPassengerID());
                 departureAirport.showDocuments();
                 response.setOperationDone(true);
                 break;
 
             case WAITINGTOBECHECKEDIN:
-                sp.setPassengerID(msg.getID());
+                sp.setPassengerID(msg.getPassengerID());
                 departureAirport.waitingToBeCheckedIn();
                 response.setOperationDone(true);
                 break;

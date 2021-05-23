@@ -20,7 +20,7 @@ public enum SPilot {
 		return String.format(logDiv, flightNumber);
 	}
 
-	public String toString() {
+	@Override public String toString() {
 		return this.state;
 	}
 }

@@ -1,10 +1,8 @@
 package threads;
 
 import common.ServerInformation;
-import sharedRegions.DepartureAirport.DepartureAirport;
 import sharedRegions.DepartureAirport.IPilotDP;
 import sharedRegions.Plane.IPilotP;
-import sharedRegions.Plane.Plane;
 import sharedRegions.Repository.IRepository;
 
 import state.SPilot;
@@ -12,16 +10,15 @@ import state.SPilot;
 public class Pilot extends Thread {
 
     //References to shared regions
-    IPilotDP departureAirport;
-    IPilotP plane;
+    private final IPilotDP departureAirport;
+    private final IPilotP plane;
 
     // Information Repository
-    IRepository repository;
+    private final IRepository repository;
 
     public Pilot(IPilotDP departureAirport, IPilotP plane, IRepository repository) {
         this.departureAirport = departureAirport;
         this.plane = plane;
-
         this.repository = repository;
     }
 

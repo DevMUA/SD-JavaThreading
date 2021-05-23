@@ -12,12 +12,12 @@ public class Passenger extends Thread {
     private int passengerID;
 
     //References to shared regions
-    private IPassengerDP departureAirport;
-    private IPassengerP plane;
-    private IPassengerAR arrivalAirport;
+    private final IPassengerDP departureAirport;
+    private final IPassengerP plane;
+    private final IPassengerAR arrivalAirport;
 
     // Information Repository
-    IRepository repository;
+    private final IRepository repository;
 
     public Passenger(int passengerID, IPassengerDP departureAirport, IPassengerP plane, IPassengerAR arrivalAirport, IRepository repository) {
         this.passengerID = passengerID;

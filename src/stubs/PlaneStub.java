@@ -7,8 +7,9 @@ import sharedRegions.Plane.IPassengerP;
 import sharedRegions.Plane.IPilotP;
 
 public class PlaneStub implements IPassengerP, IPilotP {
-    private String serverHostname;
-    private int serverPort;
+
+    private final String serverHostname;
+    private final int serverPort;
 
     public PlaneStub(String hostname, int port) {
         serverHostname = hostname;

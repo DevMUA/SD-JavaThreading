@@ -19,7 +19,7 @@ public enum SHostess {
 		return String.format(logDiv, flightNumber, numPassenger);
 	}
 
-	public String toString() {
+	@Override public String toString() {
 		return this.state;
 	}
 }

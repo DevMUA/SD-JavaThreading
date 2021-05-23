@@ -2,11 +2,11 @@ package common;
 
 import proxies.SharedRegionProxy;
 
-public class ServiceProvider extends Thread implements HostessInterface,PilotInterface,PassengerInterface{
+public class ServiceProvider extends Thread implements HostessInterface, PilotInterface, PassengerInterface {
 
-    private SharedRegionProxy sharedRegion;
+    private final SharedRegionProxy sharedRegion;
 
-    private ServerCom serverCom;
+    private final ServerCom serverCom;
 
     //Passenger ID
     private int id;

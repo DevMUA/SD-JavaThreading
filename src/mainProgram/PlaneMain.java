@@ -5,7 +5,9 @@ import common.ServerInformation;
 import common.ServiceProvider;
 import proxies.PlaneProxy;
 import sharedRegions.Plane.Plane;
+import sharedRegions.Repository.IRepository;
 import sharedRegions.Repository.Repository;
+import stubs.RepositoryStub;
 
 import java.net.SocketTimeoutException;
 
@@ -20,8 +22,9 @@ public class PlaneMain {
         //Connection to be attended by a thread
         ServerCom serverConn;
 
-        Repository temporaryFix = new Repository(20);
-        Plane plane = new Plane(temporaryFix);
+        IRepository repository = new RepositoryStub(ServerInformation.REPOSITORYHOSTNAME, ServerInformation.REPOSITORYPORT);
+
+        Plane plane = new Plane(repository);
         PlaneProxy planeProxy = new PlaneProxy(plane);
 
         serverCom = new ServerCom(ServerInformation.PLANESERVERPORT);
@@ -30,11 +33,12 @@ public class PlaneMain {
         while(planeProxy.isRunning()){
             try {
                 serverConn = serverCom.accept();
+
                 serviceProvider = new ServiceProvider(planeProxy, serverConn);
                 serviceProvider.start();
             }
             catch(SocketTimeoutException e){
-
+                e.printStackTrace();
             }
         }
     }

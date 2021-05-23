@@ -10,7 +10,7 @@ public enum SPassenger {
 	private SPassenger(String state) { this.state = state; }
 	private final String state;
 
-	public String toString() {
+	@Override public String toString() {
 		return this.state;
 	}
 }

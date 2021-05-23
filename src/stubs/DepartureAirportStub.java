@@ -12,8 +12,8 @@ import threads.Pilot;
 
 public class DepartureAirportStub implements IHostessDP, IPassengerDP, IPilotDP {
 
-    private String serverHostname;
-    private int serverPort;
+    private final String serverHostname;
+    private final int serverPort;
 
     public DepartureAirportStub(String hostname, int port) {
         serverHostname = hostname;
@@ -73,13 +73,12 @@ public class DepartureAirportStub implements IHostessDP, IPassengerDP, IPilotDP 
         Message response = (Message) cc.readObject();
         return 0;
     }
-
     // preciso de dar fix a este boolean later;
     public boolean informReadyToFly() {
         Hostess p = (Hostess) Thread.currentThread();
 
         Message message = new Message(MethodType.INFORMREADYTOFLY);
-        message.sethostessAttendendedAllPassengers(p.allPassengersAttended());
+        message.setHostessAttendendedAllPassengers(p.allPassengersAttended());
         ClientCom cc = new ClientCom(serverHostname, serverPort);
         cc.open();
         cc.writeObject(message);

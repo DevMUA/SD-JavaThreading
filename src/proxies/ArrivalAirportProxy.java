@@ -5,33 +5,32 @@ import common.ServerInformation;
 import common.ServiceProvider;
 import sharedRegions.ArrivalAirport.ArrivalAirport;
 
-public class ArrivalAirportProxy implements SharedRegionProxy{
+public class ArrivalAirportProxy implements SharedRegionProxy {
 
     private final ArrivalAirport arrivalAirport;
 
-    private int count;
+    private int passengersCount;
 
     private boolean isRunning;
 
-    public ArrivalAirportProxy(ArrivalAirport arrivalAirport){
+    public ArrivalAirportProxy(ArrivalAirport arrivalAirport) {
         this.arrivalAirport = arrivalAirport;
-        this.count = 0;
+        this.passengersCount = 0;
         isRunning = true;
     }
 
-    public Message processAndReply(Message msg){
+    public Message processAndReply(Message msg) {
         Message response = new Message(false);
         ServiceProvider sp = (ServiceProvider) Thread.currentThread();
 
-        switch(msg.getMethodType()){
+        switch(msg.getMethodType()) {
             case LEAVEAIRPORT:
-                sp.setPassengerID(msg.getID());
+                sp.setPassengerID(msg.getPassengerID());
                 arrivalAirport.leaveAirport();
-                synchronized (this){
-                    count++;
-                    if(count == ServerInformation.NPASSENGERS){
+                synchronized (this) {
+                    passengersCount++;
+                    if(passengersCount == ServerInformation.NPASSENGERS){
                         isRunning = false;
-                        System.out.println("Shutdown arrival airport");
                     }
                 }
                 response.setOperationDone(true);

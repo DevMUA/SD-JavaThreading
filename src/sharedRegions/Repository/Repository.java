@@ -12,12 +12,12 @@ import java.util.LinkedList;
 
 public class Repository implements IRepository {
 
-	SPassenger sPassengers[]; 
+	SPassenger[] sPassengers;
     SPilot sPilot = SPilot.AT_TRANSFER_GATE;
     SHostess sHostess = SHostess.WAITING_FOR_FLIGHT;
 
     // Sums up of passengers transported in all the flights
-    LinkedList<Integer> flights = new LinkedList<Integer>();
+    LinkedList<Integer> flights = new LinkedList<>();
 
     // number of passengers presently forming a queue to board the plane
     int inq = 0;
@@ -31,14 +31,15 @@ public class Repository implements IRepository {
         Arrays.fill(sPassengers, SPassenger.GOING_TO_AIRPORT);
 
         String state = String.format("%"+ 42 +"sAirlift - Description of the internal state\n\n PT   HT ", " ");
+
         for(int i = 0; i < NUMBER_PASSENGERS; i++)
             state += String.format("  P%02d", i);
-        state += " InQ InF PTAL\n";
 
+        state += " InQ InF PTAL\n";
         write(state);
 	}
 	
-    public synchronized void update(SPilot state) {
+    public synchronized int update(SPilot state) {
         sPilot = state;
 
         if(state==SPilot.READY_FOR_BOARDING) 
@@ -46,16 +47,20 @@ public class Repository implements IRepository {
 
         String div = state.logDiv(flights.size());
         write(div + state());
+
+        return 0;
     }
 
-    public synchronized void update(int passenger_no, SHostess state) {
+    public synchronized int update(int passengerID, SHostess state) {
         sHostess = state;
 
-        String div = state.logDiv(flights.size(), passenger_no);    
+        String div = state.logDiv(flights.size(), passengerID);
         write(div + state());
+
+        return 0;
     }
 
-    public synchronized void update(SHostess state) {
+    public synchronized int update(SHostess state) {
         if(sHostess != state) {
             sHostess = state;
             
@@ -67,37 +72,43 @@ public class Repository implements IRepository {
             String div = state.logDiv(flights.size(), inf);
             write(div + state());
         }
+
+        return 0;
     }
 
-    public synchronized void update(int passenger_no, SPassenger state) {
-        sPassengers[passenger_no] = state;
+    public synchronized int update(int passengerID, SPassenger state) {
+        sPassengers[passengerID] = state;
+
         switch(state) {
             case AT_DESTINATION:
                 ptal++;
         }
+
         write(state());
+        return 0;
     }
 
-    public synchronized void updateInq(int inq) { this.inq = inq; }
-    public synchronized void updateInf(int inf) { this.inf = inf; }
-    public synchronized void updatePtal(int ptal) { this.ptal = ptal; }
+    public synchronized int updateInq(int inq)   { this.inq = inq;   return 0; }
+    public synchronized int updateInf(int inf)   { this.inf = inf;   return 0; }
+    public synchronized int updatePtal(int ptal) { this.ptal = ptal; return 0; }
 
-    public synchronized void writeSumUp() {
-        String info = "\nAirlift sum up:";
+    public synchronized int writeSumUp() {
+        StringBuilder info = new StringBuilder("\nAirlift sum up:");
         
         for(int i = 0; i < flights.size(); i++) {
-            info += String.format("\nFlight %d transported %d passengers", i+1, flights.get(i));
+            info.append(String.format("%nFlight %d transported %d passengers", i + 1, flights.get(i)));
         }
         
         write(info + ".\n");
+        return 0;
     }
 
-    // Obtaining last updated state of every thread;
+    // Obtaining last updated state of every thread
     private String state() {
         String state = sPilot.toString() + " " + sHostess.toString();
-        for(int i = 0; i < sPassengers.length; i++)
-            state += " " + sPassengers[i].toString();
-        return state + String.format("  %2d  %2d  %2d \n", inq, inf, ptal);
+        for(SPassenger passenger : sPassengers)
+            state += " " + passenger.toString();
+        return state + String.format("  %2d  %2d  %2d %n", inq, inf, ptal);
     }
 
     private void write(String lines) {

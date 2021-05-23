@@ -1,64 +1,83 @@
 package common;
 
-import common.ClientCom;
+import state.SHostess;
+import state.SPassenger;
+import state.SPilot;
 
 import java.io.Serializable;
 
 public class Message implements Serializable {
 
     //PASSENGER ID
-    private int id;
+    private int passengerID = -1;
 
-    private MethodType methodType;
+    private boolean operationDone = false;
+    private boolean responseBoolValue = false;
+    private boolean hostessAttendendedAllPassengers = false;
 
-    private boolean operationDone;
-    private boolean responseBoolValue;
-    private boolean hostessAttendendedAllPassengers;
+    // Repository Variables
+    private int inq = -1;
+    private int inf = -1;
+    private int ptal = -1;
 
-    public Message(int id, MethodType methodType){
-        this.id = id;
+    private SPilot pilotState = null;
+    private SHostess hostessState = null;
+    private SPassenger passengerState = null;
+
+    private MethodType methodType = MethodType.UPDATEREPO;
+
+    public Message() {}
+    public Message(MethodType methodType) {
         this.methodType = methodType;
     }
-
-    public Message(MethodType methodType){
-        this.id = -1;
+    public Message(int passengerID, MethodType methodType) {
+        this.passengerID = passengerID;
         this.methodType = methodType;
     }
-
     public Message(Boolean operationDone){
         this.operationDone = operationDone;
     }
 
-    public MethodType getMethodType(){
-        return methodType;
+
+    public Message(SPilot state)   { this.pilotState = state; }
+    public Message(SHostess state) { this.hostessState = state; }
+    public Message(int passengerID, SHostess state) {
+        this.passengerID = passengerID;
+        this.hostessState = state;
+    }
+    public Message(int passengerID, SPassenger state) {
+        this.passengerID = passengerID;
+        this.passengerState = state;
     }
 
-    public int getID(){
-        return this.id;
-    }
+    public MethodType getMethodType() { return methodType; }
+    public int getPassengerID() { return passengerID; }
+    public boolean isOperationDone() { return operationDone; }
+    public boolean getResponseBoolValue() { return responseBoolValue; }
+    public boolean hasHostessAttendendedAllPassengers() { return hostessAttendendedAllPassengers; }
 
-    public void setOperationDone(boolean value){
-        this.operationDone = value;
-    }
+    public int getInq() { return inq; }
+    public int getInf() { return inf; }
+    public int getPtal() { return ptal; }
 
-    public boolean getOperationDone(){
-        return operationDone;
-    }
+    public SPilot getPilotState() { return pilotState; }
+    public SHostess getHostessState() { return hostessState; }
+    public SPassenger getPassengerState() { return passengerState; }
 
-    public void setResponseBoolValue(boolean value){
-        this.responseBoolValue = value;
-    }
 
-    public boolean getResponseBoolValue(){
-        return responseBoolValue;
+    public void setMethodType(MethodType methodType) {
+        this.methodType = methodType;
     }
+    public void setPassengerID(int passengerID) { this.passengerID = passengerID; }
+    public void setOperationDone(boolean operationDone) { this.operationDone = operationDone; }
+    public void setResponseBoolValue(boolean responseBoolValue) { this.responseBoolValue = responseBoolValue; }
+    public void setHostessAttendendedAllPassengers(boolean hostessAttendendedAllPassengers) { this.hostessAttendendedAllPassengers = hostessAttendendedAllPassengers; }
 
-    public void sethostessAttendendedAllPassengers(boolean value){
-        hostessAttendendedAllPassengers = value;
-    }
+    public void setInq(int inq) { this.inq = inq; }
+    public void setInf(int inf) { this.inf = inf; }
+    public void setPtal(int ptal) { this.ptal = ptal; }
 
-    public boolean gethostessAttendendedAllPassengers(){
-        return hostessAttendendedAllPassengers;
-    }
-
+    public void setPilotState(SPilot pilotState) { this.pilotState = pilotState; }
+    public void setHostessState(SHostess hostessState) { this.hostessState = hostessState; }
+    public void setPassengerState(SPassenger passengerState) { this.passengerState = passengerState; }
 }

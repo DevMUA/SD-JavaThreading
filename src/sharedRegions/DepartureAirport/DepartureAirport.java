@@ -5,12 +5,7 @@ import common.PassengerInterface;
 import common.ServiceProvider;
 import sharedRegions.Repository.IRepository;
 
-import state.SPilot;
 import state.SHostess;
-import state.SPassenger;
-
-import threads.Hostess;
-import threads.Passenger;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -24,25 +19,27 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
     private int passengersInPlane;
 
     //Maximum and minimum passengers per plane
-    private int MIN;
+    private final int MIN;
     private int MAX;
 
     //Signaling variables passenger
     private boolean showingDocuments;
     private boolean checkedIn;
+
     //Signaling variables hostess
     private boolean waitForNextPassenger;
     private boolean askDocuments;
     private boolean informPlaneReadyToTakeOff;
     private boolean informPilotToCeaseActivity;
+
     //Signaling variables pilot
     private boolean informPlaneReadyForBoarding;
 
     // Information Repository
-    IRepository repository;
+    private final IRepository repository;
 
     public DepartureAirport(int MIN,int MAX, IRepository repository) {
-        passengerQueue = new LinkedList<Integer>();
+        passengerQueue = new LinkedList<>();
         passengersInPlane = 0;
 
         this.MIN = MIN;
@@ -51,11 +48,13 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
         //passenger variables
         showingDocuments = false;
         checkedIn = false;
+
         //hostess variables
         waitForNextPassenger = true;
         askDocuments = false;
         informPlaneReadyToTakeOff = false;
         informPilotToCeaseActivity = false;
+
         //pilot variables
         informPlaneReadyForBoarding = false;
 

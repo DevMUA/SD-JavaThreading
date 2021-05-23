@@ -4,16 +4,12 @@ import common.PassengerInterface;
 import common.ServiceProvider;
 import sharedRegions.Repository.IRepository;
 
-import state.SPassenger;
-
-import threads.Passenger;
-
 public class ArrivalAirport implements IPassengerAR {
 
     private int numberOfArrivedPassengers;
 
     // Information Repository
-    IRepository repository;
+    private final IRepository repository;
 
     public ArrivalAirport(IRepository repository) {
         this.repository = repository;
@@ -40,9 +36,5 @@ public class ArrivalAirport implements IPassengerAR {
 
     public int getNumberOfArrivedPassengers() {
         return numberOfArrivedPassengers;
-    }
-
-    public void setNumberOfArrivedPassengers(int numberOfArrivedPassengers) {
-        this.numberOfArrivedPassengers = numberOfArrivedPassengers;
     }
 }

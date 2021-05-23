@@ -13,7 +13,7 @@ import threads.Passenger;
 
 public class PassengerMain {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         IPassengerDP departureAirport = new DepartureAirportStub(ServerInformation.DEPARTUREAIRPORTHOSTNAME, ServerInformation.DEPARTUREAIRPORTSERVERPORT);
         IPassengerP plane = new PlaneStub(ServerInformation.PLANEHOSTNAME, ServerInformation.PLANESERVERPORT);
@@ -23,6 +23,7 @@ public class PassengerMain {
 
         Passenger passenger = new Passenger(Integer.parseInt(args[0]), departureAirport, plane, arrivalAirport, repository);
         passenger.start();
+
         try {
             passenger.join();
         } catch (InterruptedException interruptedException) {

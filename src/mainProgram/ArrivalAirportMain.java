@@ -5,7 +5,8 @@ import common.ServerInformation;
 import common.ServiceProvider;
 import proxies.ArrivalAirportProxy;
 import sharedRegions.ArrivalAirport.ArrivalAirport;
-import sharedRegions.Repository.Repository;
+import sharedRegions.Repository.IRepository;
+import stubs.RepositoryStub;
 
 import java.net.SocketTimeoutException;
 
@@ -20,21 +21,22 @@ public class ArrivalAirportMain {
         //Connection to be attended by a thread
         ServerCom serverConn;
 
-        Repository temporaryFix = new Repository(20);
-        ArrivalAirport arrivalAirport = new ArrivalAirport(temporaryFix);
+        IRepository repository = new RepositoryStub(ServerInformation.REPOSITORYHOSTNAME, ServerInformation.REPOSITORYPORT);
+
+        ArrivalAirport arrivalAirport = new ArrivalAirport(repository);
         ArrivalAirportProxy arrivalAirportProxy = new ArrivalAirportProxy(arrivalAirport);
 
         serverCom = new ServerCom(ServerInformation.ARRIVALAIRPORTSERVERPORT);
         serverCom.start();
 
-        while(arrivalAirportProxy.isRunning()){
+        while(arrivalAirportProxy.isRunning()) {
             try {
                 serverConn = serverCom.accept();
 
                 serviceProvider = new ServiceProvider(arrivalAirportProxy, serverConn);
                 serviceProvider.start();
             }
-             catch (SocketTimeoutException e) {
+            catch (SocketTimeoutException e) {
                 e.printStackTrace();
             }
         }

@@ -4,7 +4,7 @@ import common.Message;
 import common.ServiceProvider;
 import sharedRegions.Plane.Plane;
 
-public class PlaneProxy implements SharedRegionProxy{
+public class PlaneProxy implements SharedRegionProxy {
 
     private Plane plane;
 
@@ -15,25 +15,25 @@ public class PlaneProxy implements SharedRegionProxy{
         this.isRunning = true;
     }
 
-    public Message processAndReply(Message msg){
+    public Message processAndReply(Message msg) {
         Message response = new Message(false);
         ServiceProvider sp = (ServiceProvider) Thread.currentThread();
 
         switch(msg.getMethodType()){
             case BOARDPLANE:
-                sp.setPassengerID(msg.getID());
+                sp.setPassengerID(msg.getPassengerID());
                 plane.boardPlane();
                 response.setOperationDone(true);
                 break;
 
             case WAITFORPLANETOLAND:
-                sp.setPassengerID(msg.getID());
+                sp.setPassengerID(msg.getPassengerID());
                 plane.waitForPlaneToLand();
                 response.setOperationDone(true);
                 break;
 
             case LEAVEPLANE:
-                sp.setPassengerID(msg.getID());
+                sp.setPassengerID(msg.getPassengerID());
                 plane.leavePlane();
                 response.setOperationDone(true);
                 break;

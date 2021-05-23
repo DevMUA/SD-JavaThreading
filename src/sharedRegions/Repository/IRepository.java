@@ -5,14 +5,14 @@ import state.SHostess;
 import state.SPassenger;
 
 public interface IRepository {
-	public void update(SPilot state);
-	public void update(SHostess state);
-	public void update(int passenger_no, SHostess state);
-	public void update(int passenger_no, SPassenger state);
+	public int update(SPilot state);
+	public int update(SHostess state);
+	public int update(int passengerID, SHostess state);
+	public int update(int passengerID, SPassenger state);
 
-	public void updateInq(int inq);
-	public void updateInf(int inf);
-	public void updatePtal(int ptal);
+	public int updateInq(int inq);
+	public int updateInf(int inf);
+	public int updatePtal(int ptal);
 
-	public void writeSumUp();
+	public int writeSumUp();
 }

@@ -17,7 +17,7 @@ public class ServerInformation {
     public static final String REPOSITORYHOSTNAME = localHost;
     public static final int REPOSITORYPORT = 6004;
 
-    public static final int NPASSENGERS = 1;
+    public static final int NPASSENGERS = 21;
 
     public static final int PLANETRAVELTIME = 5000;//GeneralTool.getRandomNumber(1,2) * 1000;
 

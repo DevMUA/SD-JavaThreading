@@ -5,12 +5,13 @@ import common.ServerInformation;
 import common.ServiceProvider;
 import proxies.DepartureAirportProxy;
 import sharedRegions.DepartureAirport.DepartureAirport;
+import sharedRegions.Repository.IRepository;
 import sharedRegions.Repository.Repository;
+import stubs.RepositoryStub;
 
 import java.net.SocketTimeoutException;
 
 public class DepartureAirportMain {
-
     public static void main(String[] args) {
 
         //Main server connection channel
@@ -21,8 +22,9 @@ public class DepartureAirportMain {
         //Connection to be attended by a thread
         ServerCom serverConn;
 
-        Repository temporaryFix = new Repository(20);
-        DepartureAirport departureAirport = new DepartureAirport(ServerInformation.MINPLANEPASSENGERS,ServerInformation.MAXPLANEPASSENGERS,temporaryFix);
+        IRepository repository = new RepositoryStub(ServerInformation.REPOSITORYHOSTNAME, ServerInformation.REPOSITORYPORT);
+
+        DepartureAirport departureAirport = new DepartureAirport(ServerInformation.MINPLANEPASSENGERS,ServerInformation.MAXPLANEPASSENGERS,repository);
         DepartureAirportProxy departureAirportProxy = new DepartureAirportProxy(departureAirport);
 
         serverCom = new ServerCom(ServerInformation.DEPARTUREAIRPORTSERVERPORT);
@@ -35,7 +37,7 @@ public class DepartureAirportMain {
                 serviceProvider = new ServiceProvider(departureAirportProxy, serverConn);
                 serviceProvider.start();
             }
-                 catch (SocketTimeoutException e) {
+            catch (SocketTimeoutException e) {
                 e.printStackTrace();
             }
         }
