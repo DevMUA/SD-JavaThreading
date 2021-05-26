@@ -9,6 +9,9 @@ import state.SPilot;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * The type Plane.
+ */
 public class Plane implements IPassengerP, IPilotP {
 
     //Passenger list
@@ -22,6 +25,11 @@ public class Plane implements IPassengerP, IPilotP {
     // Information Repository
     private final IRepository repository;
 
+    /**
+     * Instantiates a new Plane.
+     *
+     * @param repository the repository
+     */
     public Plane(IRepository repository) {
         passengerQueue = new LinkedList<>();
 

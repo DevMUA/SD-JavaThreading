@@ -4,12 +4,20 @@ import common.Message;
 import common.ServiceProvider;
 import sharedRegions.Plane.Plane;
 
+/**
+ * The type Plane proxy.
+ */
 public class PlaneProxy implements SharedRegionProxy {
 
     private Plane plane;
 
     private boolean isRunning;
 
+    /**
+     * Instantiates a new Plane proxy.
+     *
+     * @param plane the plane
+     */
     public PlaneProxy(Plane plane){
         this.plane = plane;
         this.isRunning = true;

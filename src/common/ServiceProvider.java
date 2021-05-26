@@ -2,6 +2,9 @@ package common;
 
 import proxies.SharedRegionProxy;
 
+/**
+ * The type Service provider.
+ */
 public class ServiceProvider extends Thread implements HostessInterface, PilotInterface, PassengerInterface {
 
     private final SharedRegionProxy sharedRegion;
@@ -13,6 +16,12 @@ public class ServiceProvider extends Thread implements HostessInterface, PilotIn
 
     private boolean allPassengersAttended;
 
+    /**
+     * Instantiates a new Service provider.
+     *
+     * @param sharedRegion the shared region
+     * @param serverCom    the server com
+     */
     public ServiceProvider(SharedRegionProxy sharedRegion, ServerCom serverCom){
         this.sharedRegion = sharedRegion;
         this.serverCom = serverCom;
@@ -30,10 +39,20 @@ public class ServiceProvider extends Thread implements HostessInterface, PilotIn
         return id;
     }
 
+    /**
+     * Set passenger id.
+     *
+     * @param id the id
+     */
     public void setPassengerID(int id){
         this.id = id;
     }
 
+    /**
+     * Sets all passengers attended.
+     *
+     * @param value the value
+     */
     public void setAllPassengersAttended(boolean value) {
         allPassengersAttended = value;
     }

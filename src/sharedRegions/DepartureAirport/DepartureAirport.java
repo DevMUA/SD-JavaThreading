@@ -12,6 +12,9 @@ import state.SPilot;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * The type Departure airport.
+ */
 public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
 
     //Passenger list
@@ -40,6 +43,13 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
     // Information Repository
     private final IRepository repository;
 
+    /**
+     * Instantiates a new Departure airport.
+     *
+     * @param MIN        the min
+     * @param MAX        the max
+     * @param repository the repository
+     */
     public DepartureAirport(int MIN,int MAX, IRepository repository) {
         passengerQueue = new LinkedList<>();
         passengersInPlane = 0;
@@ -293,6 +303,11 @@ public class DepartureAirport implements IHostessDP, IPassengerDP, IPilotDP {
         return informPilotToCeaseActivity;
     }
 
+    /**
+     * Sets inform pilot to cease activity.
+     *
+     * @param informPilotToCeaseActivity the inform pilot to cease activity
+     */
     public synchronized void setInformPilotToCeaseActivity(boolean informPilotToCeaseActivity) {
         this.informPilotToCeaseActivity = informPilotToCeaseActivity;
     }

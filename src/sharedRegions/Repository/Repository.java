@@ -10,23 +10,52 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * The type Repository.
+ */
 public class Repository implements IRepository {
 
-	SPassenger[] sPassengers;
+    /**
+     * The S passengers.
+     */
+    SPassenger[] sPassengers;
+    /**
+     * The S pilot.
+     */
     SPilot sPilot = SPilot.AT_TRANSFER_GATE;
+    /**
+     * The S hostess.
+     */
     SHostess sHostess = SHostess.WAITING_FOR_FLIGHT;
 
-    // Sums up of passengers transported in all the flights
+    /**
+     * The Flights.
+     */
+// Sums up of passengers transported in all the flights
     LinkedList<Integer> flights = new LinkedList<>();
 
-    // number of passengers presently forming a queue to board the plane
+    /**
+     * The Inq.
+     */
+// number of passengers presently forming a queue to board the plane
     int inq = 0;
-    // number of passengers in the plane
+    /**
+     * The Inf.
+     */
+// number of passengers in the plane
     int inf = 0;
-    // number of passengers that have already arrived at their destination
+    /**
+     * The Ptal.
+     */
+// number of passengers that have already arrived at their destination
     int ptal = 0;
 
-	public Repository(int NUMBER_PASSENGERS) {
+    /**
+     * Instantiates a new Repository.
+     *
+     * @param NUMBER_PASSENGERS the number passengers
+     */
+    public Repository(int NUMBER_PASSENGERS) {
 	   	sPassengers = new SPassenger[NUMBER_PASSENGERS];
         Arrays.fill(sPassengers, SPassenger.GOING_TO_AIRPORT);
 

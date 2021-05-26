@@ -8,11 +8,20 @@ import state.SHostess;
 import state.SPassenger;
 import state.SPilot;
 
+/**
+ * The type Repository stub.
+ */
 public class RepositoryStub implements IRepository {
 
     private final String serverHostname;
     private final int serverPort;
 
+    /**
+     * Instantiates a new Repository stub.
+     *
+     * @param hostname the hostname
+     * @param port     the port
+     */
     public RepositoryStub(String hostname, int port) {
         serverHostname = hostname;
         serverPort = port;

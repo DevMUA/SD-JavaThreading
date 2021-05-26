@@ -10,7 +10,15 @@ import stubs.RepositoryStub;
 
 import java.net.SocketTimeoutException;
 
+/**
+ * The type Arrival airport main.
+ */
 public class ArrivalAirportMain {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
 
         //Main server connection channel

@@ -5,6 +5,9 @@ import common.ServerInformation;
 import common.ServiceProvider;
 import sharedRegions.ArrivalAirport.ArrivalAirport;
 
+/**
+ * The type Arrival airport proxy.
+ */
 public class ArrivalAirportProxy implements SharedRegionProxy {
 
     private final ArrivalAirport arrivalAirport;
@@ -13,6 +16,11 @@ public class ArrivalAirportProxy implements SharedRegionProxy {
 
     private boolean isRunning;
 
+    /**
+     * Instantiates a new Arrival airport proxy.
+     *
+     * @param arrivalAirport the arrival airport
+     */
     public ArrivalAirportProxy(ArrivalAirport arrivalAirport) {
         this.arrivalAirport = arrivalAirport;
         this.passengersCount = 0;

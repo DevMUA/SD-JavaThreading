@@ -8,7 +8,15 @@ import sharedRegions.Repository.Repository;
 
 import java.net.SocketTimeoutException;
 
+/**
+ * The type Repository main.
+ */
 public class RepositoryMain {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
 
         //Main server connection channel

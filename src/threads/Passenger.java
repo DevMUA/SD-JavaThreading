@@ -6,6 +6,9 @@ import sharedRegions.DepartureAirport.IPassengerDP;
 import sharedRegions.Plane.IPassengerP;
 import sharedRegions.Repository.IRepository;
 
+/**
+ * The type Passenger.
+ */
 public class Passenger extends Thread {
 
     //Private attributes
@@ -19,6 +22,15 @@ public class Passenger extends Thread {
     // Information Repository
     private final IRepository repository;
 
+    /**
+     * Instantiates a new Passenger.
+     *
+     * @param passengerID      the passenger id
+     * @param departureAirport the departure airport
+     * @param plane            the plane
+     * @param arrivalAirport   the arrival airport
+     * @param repository       the repository
+     */
     public Passenger(int passengerID, IPassengerDP departureAirport, IPassengerP plane, IPassengerAR arrivalAirport, IRepository repository) {
         this.passengerID = passengerID;
         this.departureAirport = departureAirport;
@@ -33,26 +45,14 @@ public class Passenger extends Thread {
 
         //In departure airport
         goingToAirport();
-        System.out.println(("Passenger: Chegou"));
         departureAirport.travelToAirport();
-
-        System.out.println(("Passenger: na Queue"));
         departureAirport.waitInQueue();
-
-        System.out.println(("Passenger: mostrar docs"));
         departureAirport.showDocuments();
-
-        System.out.println(("Passenger: checkedIn"));
         departureAirport.waitingToBeCheckedIn();
+
         //In plane
-
-        System.out.println(("Passenger: boardplane"));
         plane.boardPlane();
-
-        System.out.println(("Passenger: esperar por aterrar"));
         plane.waitForPlaneToLand();
-
-        System.out.println(("Passenger: desmerdar"));
         plane.leavePlane();
 
         //In arrival airport
@@ -68,10 +68,20 @@ public class Passenger extends Thread {
         }
     }
 
+    /**
+     * Gets passenger id.
+     *
+     * @return the passenger id
+     */
     public int getPassengerID() {
         return passengerID;
     }
 
+    /**
+     * Sets passenger id.
+     *
+     * @param passengerID the passenger id
+     */
     public void setPassengerID(int passengerID) {
         this.passengerID = passengerID;
     }

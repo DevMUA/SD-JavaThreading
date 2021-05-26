@@ -7,8 +7,16 @@ import sharedRegions.DepartureAirport.IHostessDP;
 import sharedRegions.Repository.IRepository;
 import threads.Hostess;
 
+/**
+ * The type Hostess main.
+ */
 public class HostessMain {
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         IHostessDP departureAirport = new DepartureAirportStub(ServerInformation.DEPARTUREAIRPORTHOSTNAME, ServerInformation.DEPARTUREAIRPORTSERVERPORT);
 

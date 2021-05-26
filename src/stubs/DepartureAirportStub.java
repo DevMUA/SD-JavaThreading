@@ -10,11 +10,20 @@ import threads.Hostess;
 import threads.Passenger;
 import threads.Pilot;
 
+/**
+ * The type Departure airport stub.
+ */
 public class DepartureAirportStub implements IHostessDP, IPassengerDP, IPilotDP {
 
     private final String serverHostname;
     private final int serverPort;
 
+    /**
+     * Instantiates a new Departure airport stub.
+     *
+     * @param hostname the hostname
+     * @param port     the port
+     */
     public DepartureAirportStub(String hostname, int port) {
         serverHostname = hostname;
         serverPort = port;

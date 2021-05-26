@@ -11,8 +11,16 @@ import sharedRegions.ArrivalAirport.IPassengerAR;
 import sharedRegions.Repository.IRepository;
 import threads.Passenger;
 
+/**
+ * The type Passenger main.
+ */
 public class PassengerMain {
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
 
         IPassengerDP departureAirport = new DepartureAirportStub(ServerInformation.DEPARTUREAIRPORTHOSTNAME, ServerInformation.DEPARTUREAIRPORTSERVERPORT);

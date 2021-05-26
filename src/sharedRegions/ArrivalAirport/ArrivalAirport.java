@@ -4,6 +4,9 @@ import common.PassengerInterface;
 import common.ServiceProvider;
 import sharedRegions.Repository.IRepository;
 
+/**
+ * The type Arrival airport.
+ */
 public class ArrivalAirport implements IPassengerAR {
 
     private int numberOfArrivedPassengers;
@@ -11,6 +14,11 @@ public class ArrivalAirport implements IPassengerAR {
     // Information Repository
     private final IRepository repository;
 
+    /**
+     * Instantiates a new Arrival airport.
+     *
+     * @param repository the repository
+     */
     public ArrivalAirport(IRepository repository) {
         this.repository = repository;
     }
@@ -34,6 +42,11 @@ public class ArrivalAirport implements IPassengerAR {
         return 0;
     }
 
+    /**
+     * Gets number of arrived passengers.
+     *
+     * @return the number of arrived passengers
+     */
     public int getNumberOfArrivedPassengers() {
         return numberOfArrivedPassengers;
     }

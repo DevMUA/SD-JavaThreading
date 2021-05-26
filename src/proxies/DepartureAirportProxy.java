@@ -4,12 +4,20 @@ import common.Message;
 import common.ServiceProvider;
 import sharedRegions.DepartureAirport.DepartureAirport;
 
+/**
+ * The type Departure airport proxy.
+ */
 public class DepartureAirportProxy implements SharedRegionProxy {
 
     private DepartureAirport departureAirport;
 
     private boolean isRunning;
 
+    /**
+     * Instantiates a new Departure airport proxy.
+     *
+     * @param departureAirport the departure airport
+     */
     public DepartureAirportProxy(DepartureAirport departureAirport) {
         this.departureAirport = departureAirport;
         this.isRunning = true;

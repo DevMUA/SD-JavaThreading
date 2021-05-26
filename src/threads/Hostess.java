@@ -3,6 +3,9 @@ package threads;
 import sharedRegions.DepartureAirport.IHostessDP;
 import sharedRegions.Repository.IRepository;
 
+/**
+ * The type Hostess.
+ */
 public class Hostess extends Thread {
 
     private final int totalNumberOfPassengers;
@@ -14,6 +17,13 @@ public class Hostess extends Thread {
     // Information Repository
     private final IRepository repository;
 
+    /**
+     * Instantiates a new Hostess.
+     *
+     * @param totalNumberOfPassengers the total number of passengers
+     * @param departureAirport        the departure airport
+     * @param repository              the repository
+     */
     public Hostess(int totalNumberOfPassengers, IHostessDP departureAirport, IRepository repository) {
         this.totalNumberOfPassengers = totalNumberOfPassengers;
         this.departureAirport = departureAirport;
@@ -27,23 +37,23 @@ public class Hostess extends Thread {
         while(!allPassengersAttended()) {
             boolean flightFull = false;
 
-            System.out.println(("Hostess: Esperar voo"));
             departureAirport.waitingForNextFlight();
 
             while(!flightFull) {
-                System.out.println(("Hostess: Esperar passageiros"));
                 departureAirport.waitingForPassenger();
-                System.out.println(("Hostess: Pedir Documentos"));
                 departureAirport.askForDocuments();
-                System.out.println(("Hostess: Esperar por checkar passageiro"));
                 departureAirport.waitingToCheckPassenger();
                 attendedPassengers++;
-                System.out.println(("Hostess: Informar pronto para voar?"));
                 flightFull = departureAirport.informReadyToFly();
             }
         }
     }
 
+    /**
+     * All passengers attended boolean.
+     *
+     * @return the boolean
+     */
     public boolean allPassengersAttended(){
         return attendedPassengers == totalNumberOfPassengers;
     }

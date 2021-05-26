@@ -8,15 +8,20 @@ import state.SHostess;
 import state.SPassenger;
 import state.SPilot;
 
-import java.awt.*;
-import java.lang.reflect.Method;
-
+/**
+ * The type Repository proxy.
+ */
 public class RepositoryProxy implements SharedRegionProxy {
 
     private Repository repository;
 
     private boolean isRunning;
 
+    /**
+     * Instantiates a new Repository proxy.
+     *
+     * @param repository the repository
+     */
     public RepositoryProxy(Repository repository) {
         this.repository = repository;
         this.isRunning = true;

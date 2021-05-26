@@ -9,11 +9,20 @@ import threads.Passenger;
 
 import java.awt.*;
 
+/**
+ * The type Plane stub.
+ */
 public class PlaneStub implements IPassengerP, IPilotP {
 
     private final String serverHostname;
     private final int serverPort;
 
+    /**
+     * Instantiates a new Plane stub.
+     *
+     * @param hostname the hostname
+     * @param port     the port
+     */
     public PlaneStub(String hostname, int port) {
         serverHostname = hostname;
         serverPort = port;

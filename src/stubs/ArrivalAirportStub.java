@@ -6,11 +6,20 @@ import common.MethodType;
 import sharedRegions.ArrivalAirport.IPassengerAR;
 import threads.Passenger;
 
+/**
+ * The type Arrival airport stub.
+ */
 public class ArrivalAirportStub implements IPassengerAR {
 
     private final String serverHostname;
     private final int serverPort;
 
+    /**
+     * Instantiates a new Arrival airport stub.
+     *
+     * @param hostname the hostname
+     * @param port     the port
+     */
     public ArrivalAirportStub(String hostname, int port) {
         serverHostname = hostname;
         serverPort = port;
